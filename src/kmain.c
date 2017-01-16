@@ -6,7 +6,7 @@ int kmain() {
     initSegment();
     initDev();
 
-    char *str = "hello world!";
+    char *str = "hello world!\n";
     devWrite(&devCOM1, str, strlen(str));
 
     return 0;

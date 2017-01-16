@@ -28,3 +28,9 @@ void serialPutChar(uint16_t port, char ch) {
     while (!serialReady(port));
     outb(SerialData(port), ch);
 }
+
+void serialWrite(uint32_t port, const char *data, size_t n) {
+    while (--n > 0) {
+        serialPutChar(port, *data++);
+    }
+}

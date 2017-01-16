@@ -4,6 +4,9 @@
 .set Flags, Align | MemInfo
 .set Checksum, -(MagicNumber + Flags)
 .set StackSize, 0x1000
+.set PageSize, 0x1000
+.set FirstPage, 0x83
+.set GlobalOffset, 0xc0000000
 
 .section .multiboot
 .align 4
@@ -14,16 +17,41 @@
 
 .section .bss
 .align 4
-kernel_stack_bottom:
+kernelStackBottom:
     .skip StackSize
-kernel_stack_top:
+kernelStackTop:
+.align 0x1000
+kPDT:
+    .skip PageSize
+
+_kPDT = kPDT - GlobalOffset
 
 .section .text
+.align 4
+
 .global loader
 .type loader, @function
-loader:
-    movl $kernel_stack_top, %esp
-    movl $kernel_stack_top, %ebp
+loader = _loader - GlobalOffset
+_loader:
+    movl $FirstPage, _kPDT
+    movl $FirstPage, _kPDT + (GlobalOffset >> 20)
+
+    movl $_kPDT, %ecx
+    movl %ecx, %cr3
+
+    movl %cr4, %ecx
+    orl $0x10, %ecx
+    movl %ecx, %cr4
+
+    movl %cr0, %ecx
+    orl $0x80000000, %ecx
+    movl %ecx, %cr0
+
+    movl $flush, %ecx
+    jmp %ecx
+flush:
+    movl $kernelStackTop, %esp
+    movl $kernelStackTop, %ebp
     call kmain
     cli
 .L:

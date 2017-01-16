@@ -1,22 +1,21 @@
 ENTRY(loader)
+OUTPUT_FORMAT(elf32-i386)
 
 SECTIONS {
-    . = 1M;
+    GlobalOffset = 0xc0000000;
+    . = 1M + GlobalOffset;
 
-    .text BLOCK(4K) : ALIGN(4K) {
+    .text ALIGN(4K) : AT(ADDR(.text) - GlobalOffset) {
         *(.multiboot)
         *(.text)
+        *(.rodata*)
     }
 
-    .rodata BLOCK(4K) : ALIGN(4K) {
-        *(.rodata)
-    }
-
-    .data BLOCK(4K) : ALIGN(4K) {
+    .data ALIGN(4K) : AT(ADDR(.data) - GlobalOffset) {
         *(.data)
     }
 
-    .bss BLOCK(4K) : ALIGN(4K) {
+    .bss ALIGN(4K) : AT(ADDR(.bss) - GlobalOffset) {
         *(COMMON)
         *(.bss)
     }

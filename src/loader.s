@@ -47,9 +47,9 @@ _loader:
     orl $0x80000000, %ecx
     movl %ecx, %cr0
 
-    movl $flush, %ecx
+    movl $.Flush, %ecx
     jmp %ecx
-flush:
+.Flush:
     movl $kernelStackTop, %esp
     movl $kernelStackTop, %ebp
     call kmain

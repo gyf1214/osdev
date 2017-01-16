@@ -20,7 +20,11 @@
 kernelStackBottom:
     .skip StackSize
 kernelStackTop:
+
 .align 0x1000
+.global kPDT
+.type kPDT, @object
+.size kPDT, PageSize
 kPDT:
     .skip PageSize
 

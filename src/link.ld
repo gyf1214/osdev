@@ -19,4 +19,6 @@ SECTIONS {
         *(COMMON)
         *(.bss)
     }
+
+    kbrk = ALIGN(4K);
 }

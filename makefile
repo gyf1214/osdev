@@ -9,6 +9,7 @@ ASFLAGS = -march=generic32
 SRCPATH = src
 OBJPATH = obj
 TARPATH = bin
+TMPPATH = tmp
 GRUBPATH = boot/grub
 
 LDSCRIPT = $(SRCPATH)/link.ld
@@ -27,9 +28,6 @@ LIBFILE = $(patsubst %, $(OBJPATH)/%.o, $(LIB))
 LIBHEADER = $(patsubst %, $(SRCPATH)/%.h, $(LIB))
 OBJFILE = $(patsubst %, $(OBJPATH)/%.o, $(OBJ))
 TARGET = $(TARPATH)/kernel
-
-GRUB = $(GRUBMENU) $(GRUBBOOT)
-GRUBFILE = $(patsubst %, $(TARPATH)/$(GRUBPATH)/%, $(GRUB))
 IMAGE = os.iso
 
 BOCHS = bochs
@@ -39,6 +37,7 @@ BOCHSFLAGS = -f $(BOCHSRC) -q
 all : $(IMAGE)
 
 run : all
+	mkdir -p $(TMPPATH)
 	$(BOCHS) $(BOCHSFLAGS)
 
 rebuild : clean all
@@ -49,16 +48,16 @@ clean :
 $(IMAGE) : $(TARGET) $(GRUBFILE) makefile
 	$(ISO) $(ISOFLAGS) -o $(IMAGE) $(TARPATH)
 
-$(TARPATH)/$(GRUBPATH)/$(GRUBMENU) : $(SRCPATH)/$(GRUBMENU) makefile
-	cp $< $@
-
 $(TARGET) : $(OBJFILE) $(LDSCRIPT) makefile
+	mkdir -p $(dir $@)
 	$(LD) $(LDFLAGS) -o $@ $(OBJFILE)
 
 $(OBJPATH)/%.o : $(SRCPATH)/%.s makefile
+	mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(OBJPATH)/%.o : $(SRCPATH)/%.c makefile
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJPATH)/kmain.o : $(LIBHEADER)

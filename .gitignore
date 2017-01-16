@@ -1,4 +1,5 @@
 obj/
 tmp/
-bin/
+bin/*
+!bin/boot
 *.iso

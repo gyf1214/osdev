@@ -5,7 +5,7 @@
 
 typedef uint16_t    fb_t;
 
-#define FBBase          ((fb_t *)0x000B8000)
+#define FBBase          ((fb_t *)0xC00B8000)
 #define FBCol           80
 #define FBRow           25
 #define FBIndex(x, y)   (FBCol * (x) + (y))

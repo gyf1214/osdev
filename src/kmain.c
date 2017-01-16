@@ -1,16 +1,16 @@
 #include "mm/segment.h"
-#include "io/dev.h"
+#include "io/device.h"
 #include "io/framebuffer.h"
 #include "util/string.h"
 
 int kmain() {
     initSegment();
-    initDev();
+    initDevice();
 
     char *str = "hello world!\n";
     int len = strlen(str);
-    devWrite(&devCOM1, str, len);
-    devWrite(&devFramebuffer, str, len);
+    deviceWrite(&deviceCOM1, str, len);
+    deviceWrite(&deviceFB, str, len);
 
     return 0;
 }

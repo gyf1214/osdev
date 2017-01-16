@@ -3,7 +3,7 @@
 
 #include "util/type.h"
 
-#define SerialCOM1      0x3fb
+#define SerialCOM1      0x3f8
 
 #define SerialData(x)   (x)
 #define SerialIntr(x)   ((x) + 1)

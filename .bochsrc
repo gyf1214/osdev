@@ -1,6 +1,7 @@
 megs:               128
 display_library:    x
 ata0-master:        type=cdrom, path=os.iso, status=inserted
+com1:               enabled=1, mode=file, dev=tmp/com1.log
 boot:               cdrom
 log:                tmp/bochs.log
 clock:              sync=none, time0=local

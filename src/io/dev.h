@@ -20,5 +20,6 @@ size_t devRead(dev_t *dev, char *buf, size_t n);
 void devControl(dev_t *dev, uint32_t sig);
 
 extern dev_t devCOM1;
+extern dev_t devFramebuffer;
 
 #endif

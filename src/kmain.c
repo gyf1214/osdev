@@ -8,16 +8,9 @@ int kmain() {
     initDev();
 
     char *str = "hello world!\n";
-    devWrite(&devCOM1, str, strlen(str));
-
-    fbClear();
-
-    int i, j;
-    for (i = 0; i < 26; ++i) {
-        for (j = 0; j < i; ++j) fbPutChar('A' + j);
-        fbPutChar('\n');
-    }
-    fbScroll();
+    int len = strlen(str);
+    devWrite(&devCOM1, str, len);
+    devWrite(&devFramebuffer, str, len);
 
     return 0;
 }

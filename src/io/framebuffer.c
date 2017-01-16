@@ -90,3 +90,10 @@ void fbPutChar(char ch) {
         break;
     }
 }
+
+void fbWrite(uint32_t info, const char *data, size_t n) {
+    info = info;
+    while (n-- > 0) {
+        fbPutChar(*data++);
+    }
+}

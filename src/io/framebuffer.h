@@ -30,4 +30,6 @@ void fbScroll(void);
 void fbNewLine(void);
 void fbPutChar(char ch);
 
+void fbWrite(uint32_t info, const char *ch, size_t n);
+
 #endif

@@ -24,7 +24,7 @@ int serialReady(uint16_t port) {
     return inb(SerialStatus(port)) & 0x20;
 }
 
-void serialWrite(uint16_t port, char ch) {
+void serialPutChar(uint16_t port, char ch) {
     while (!serialReady(port));
     outb(SerialData(port), ch);
 }

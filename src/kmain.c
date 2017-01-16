@@ -1,10 +1,13 @@
 #include "mm/segment.h"
-#include "io/serial.h"
+#include "io/dev.h"
+#include "util/string.h"
 
 int kmain() {
     initSegment();
-    initSerial(SerialCOM1);
-    serialPutChar(SerialCOM1, 'H');
+    initDev();
+
+    char *str = "hello world!";
+    devWrite(&devCOM1, str, strlen(str));
 
     return 0;
 }

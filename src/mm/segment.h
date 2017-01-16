@@ -26,7 +26,7 @@
 #define SegCodeUsr  SegComm | SegPriv(3) | SegCodeRX
 #define SegDataUsr  SegComm | SegPriv(3) | SegDataRW
 
-#define SegLength   7
+#define SegLength   5
 
 #define SegSelSys   0
 #define SegSelUsr   3

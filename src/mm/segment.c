@@ -24,10 +24,8 @@ void initSegment() {
     segSet(0, 0, 0, 0);
     segSet(1, 0, 0xffffffff, SegCodeSys);
     segSet(2, 0, 0xffffffff, SegDataSys);
-    segSet(3, 0xc0000000, 0xffffffff, SegCodeSys);
-    segSet(4, 0xc0000000, 0xffffffff, SegDataSys);
-    segSet(5, 0, 0xffffffff, SegCodeUsr);
-    segSet(6, 0, 0xffffffff, SegDataUsr);
+    segSet(3, 0, 0xffffffff, SegCodeUsr);
+    segSet(4, 0, 0xffffffff, SegDataUsr);
 
     gdtr.address = (uint32_t)gdt;
     gdtr.limit = SegLength * sizeof(gdt_t);

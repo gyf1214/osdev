@@ -18,7 +18,7 @@ Just `make all` to build the final `os.iso`
 
 The boot loader is GRUB 0.97, using `stage2_eltorito` for ISO
 
-Both the GRUB binary and `menu.lst` is provided
+Both the GRUB binary and `menu.lst` are provided
 
 Use `make run` to start the simulator if `bochs` is installed
 

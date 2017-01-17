@@ -16,10 +16,6 @@
 
 
 .section .bss
-.align 4
-kernelStackBottom:
-    .skip StackSize
-kernelStackTop:
 
 .align 0x1000
 .global kPDT
@@ -29,6 +25,11 @@ kPDT:
     .skip PageSize
 
 _kPDT = kPDT - GlobalOffset
+
+.align 4
+kernelStackBottom:
+    .skip StackSize
+kernelStackTop:
 
 .section .text
 .align 4
@@ -51,8 +52,8 @@ _loader:
     orl $0x80000000, %ecx
     movl %ecx, %cr0
 
-    movl $.Flush, %ecx
-    jmp %ecx
+    pushl $.Flush
+    ret
 .Flush:
     movl $kernelStackTop, %esp
     movl $kernelStackTop, %ebp

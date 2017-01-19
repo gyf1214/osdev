@@ -3,7 +3,7 @@ LD = i386-elf-ld
 AS = i386-elf-as
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
  		 -nostartfiles -nodefaultlibs -Wall -Wextra -Werror \
-		 -Isrc
+		 -Isrc -g
 ASFLAGS = -march=generic32
 
 SRCPATH = src
@@ -34,11 +34,19 @@ BOCHS = bochs
 BOCHSRC = .bochsrc
 BOCHSFLAGS = -f $(BOCHSRC) -q
 
+QEMU = qemu-system-i386
+QEMULOG = tmp/qemu.log
+QEMUSERIAL = tmp/com1.log
+QEMUFLAGS = -D $(QEMULOG) -serial file:$(QEMUSERIAL) -s -S -cdrom
+
+GDB = i386-elf-gdb
+
 all : $(IMAGE)
 
 run : all
 	mkdir -p $(TMPPATH)
-	$(BOCHS) $(BOCHSFLAGS)
+	$(QEMU) $(QEMUFLAGS) $(IMAGE) &
+	$(GDB)
 
 rebuild : clean all
 

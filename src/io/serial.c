@@ -11,7 +11,7 @@ device_t *initSerial(uint16_t port) {
     outb(SerialLine(port), SerialLineSet);
     outb(SerialModem(port), SerialModemSet);
 
-    device_t *ret = (device_t *)kalloc(kmemDevice);
+    device_t *ret = (device_t *)kalloc(KmemDevice);
     ret -> info = port;
     ret -> write = serialWrite;
     return ret;

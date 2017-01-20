@@ -28,7 +28,7 @@ void fbSetCursor(int x, int y) {
 device_t *initFB() {
     fbClear();
 
-    device_t *ret = (device_t *)kalloc(kmemDevice);
+    device_t *ret = (device_t *)kalloc(KmemDevice);
     ret -> write = fbWrite;
     return ret;
 }

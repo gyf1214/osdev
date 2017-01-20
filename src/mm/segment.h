@@ -34,7 +34,7 @@
 
 typedef uint64_t    gdt_t;
 
-typedef struct {
+typedef struct gdtr {
     uint16_t limit;
     uint32_t address;
 } __attribute__((packed)) gdtr_t;

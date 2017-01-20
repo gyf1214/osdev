@@ -7,7 +7,7 @@ typedef void (*write_t)(uint32_t, const char *, size_t);
 typedef size_t (*read_t)(uint32_t, char *, size_t);
 typedef void (*control_t)(uint32_t, uint32_t);
 
-typedef struct {
+typedef struct device {
     uint32_t info;
     read_t read;
     write_t write;

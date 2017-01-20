@@ -20,7 +20,7 @@ SECTIONS {
         *(.bss)
     }
 
-    kBSSEnd = ALIGN(4K);
+    kBSSEnd = ALIGN(4);
 
     kStack = 4M + GlobalOffset;
 }

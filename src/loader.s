@@ -14,15 +14,14 @@
     .long Flags
     .long Checksum
 
-
 .section .bss
 
 .align 0x1000
 .global kPDT
 .type kPDT, @object
-.size kPDT, PageSize
 kPDT:
     .skip PageSize
+.size kPDT, . - kPDT
 
 _kPDT = kPDT - GlobalOffset
 
@@ -58,3 +57,4 @@ _loader:
 .L:
     hlt
     jmp .L
+.size loader, . - _loader

@@ -2,6 +2,7 @@
 #define __FRAMEBUFFER
 
 #include "util/type.h"
+#include "io/device.h"
 
 typedef uint16_t    fb_t;
 
@@ -25,6 +26,7 @@ typedef uint16_t    fb_t;
 void fbSetCell(int x, int y, char c, uint8_t fg, uint8_t bg);
 void fbSetCursor(int x, int y);
 
+device_t *initFB(void);
 void fbClear(void);
 void fbScroll(void);
 void fbNewLine(void);

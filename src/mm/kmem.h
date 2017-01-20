@@ -8,6 +8,8 @@
 #define kmemAlign(x)    (((x) + kmemAlignSize - 1) & -kmemAlignSize)
 #define kmemNext(x)     (*((kptr_t *)(x)))
 
+#define kmemDevice      0
+
 typedef char *kptr_t;
 typedef void (*ctor_t)(void *, size_t);
 
@@ -19,7 +21,7 @@ typedef struct kmem_cache {
 
 extern char kBSSEnd;
 
-void kmemInit(void);
+void initKmem(void);
 void kmemInitCache(int cache, size_t size, ctor_t ctor);
 void *ksbrk(size_t);
 void *kalloc(int cache);

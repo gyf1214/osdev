@@ -2,6 +2,7 @@
 #define __SERIAL
 
 #include "util/type.h"
+#include "io/device.h"
 
 #define SerialCOM1      0x3f8
 
@@ -19,7 +20,7 @@
 #define SerialLineSet   0x3
 #define SerialModemSet  0xb
 
-void initSerial(uint16_t port);
+device_t *initSerial(uint16_t port);
 int serialReceived(uint16_t port);
 char serialGetChar(uint16_t port);
 int serialReady(uint16_t port);

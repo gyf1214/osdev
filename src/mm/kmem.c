@@ -3,7 +3,7 @@
 static kptr_t kbrk;
 static kmem_cache_t kCache[kmemCacheSize];
 
-void kmemInit() {
+void initKmem() {
     kbrk = &kBSSEnd;
 }
 

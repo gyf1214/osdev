@@ -1,23 +1,20 @@
 #include "io/device.h"
+#include "mm/kmem.h"
 #include "io/serial.h"
 #include "io/framebuffer.h"
 
-device_t deviceCOM1, deviceFB;
+static void deviceCtor(void *ptr, size_t size) {
+    size = size;
+
+    device_t *dev = (device_t *)ptr;
+    dev -> info = 0;
+    dev -> read = NULL;
+    dev -> write = NULL;
+    dev -> control = NULL;
+}
 
 void initDevice() {
-    //init serial port COM1
-    initSerial(SerialCOM1);
-    deviceCOM1.info = SerialCOM1;
-    deviceCOM1.read = NULL;
-    deviceCOM1.write = serialWrite;
-    deviceCOM1.control = NULL;
-
-    //init framebuffer
-    fbClear();
-    deviceFB.info = 0;
-    deviceFB.read = NULL;
-    deviceFB.write = fbWrite;
-    deviceFB.control = NULL;
+    kmemInitCache(kmemDevice, sizeof(device_t), deviceCtor);
 }
 
 void deviceWrite(device_t *dev, const char *data, size_t n) {

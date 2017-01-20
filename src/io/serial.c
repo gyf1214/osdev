@@ -1,7 +1,8 @@
 #include "io/serial.h"
 #include "io/port.h"
+#include "mm/kmem.h"
 
-void initSerial(uint16_t port) {
+device_t *initSerial(uint16_t port) {
     outb(SerialIntr(port), SerialIntrSet);
     outb(SerialLine(port), SerialDLAB);
     outb(SerialData(port), SerialBaud & 0xff);
@@ -9,6 +10,11 @@ void initSerial(uint16_t port) {
     outb(SerialFIFO(port), SerialFIFOSet);
     outb(SerialLine(port), SerialLineSet);
     outb(SerialModem(port), SerialModemSet);
+
+    device_t *ret = (device_t *)kalloc(kmemDevice);
+    ret -> info = port;
+    ret -> write = serialWrite;
+    return ret;
 }
 
 int serialReceived(uint16_t port) {

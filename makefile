@@ -44,14 +44,18 @@ GDB = i386-elf-gdb
 all : $(IMAGE)
 
 run : all
-	mkdir -p $(TMPPATH)
-	$(QEMU) $(QEMUFLAGS) $(IMAGE) &
 	$(GDB)
+
+qemu: all $(TMPPATH)
+	$(QEMU) $(QEMUFLAGS) $(IMAGE) &
 
 rebuild : clean all
 
 clean :
-	rm -fr $(IMAGE) $(TARGET) $(OBJPATH)/**/*.o
+	rm -fr $(IMAGE) $(TARGET) $(OBJPATH)/*
+
+$(TMPPATH) :
+	mkdir -p $@
 
 $(IMAGE) : $(TARGET) $(GRUBFILE) makefile
 	$(ISO) $(ISOFLAGS) -o $(IMAGE) $(TARPATH)

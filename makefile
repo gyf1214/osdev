@@ -3,7 +3,7 @@ LD = i386-elf-ld
 AS = i386-elf-as
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
  		 -nostartfiles -nodefaultlibs -Wall -Wextra -Werror \
-		 -Isrc -g
+		 -Isrc -g -Og
 ASFLAGS = -march=generic32
 
 SRCPATH = src

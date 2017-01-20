@@ -36,6 +36,8 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 
 ## Progress ##
 
+b0f295ca76443b21af12a9af9dae1fa52ec614b9
+
 - ~~Bare Bones~~ -> <968c88af0338d79dabe5114f52da91cae860e82c>
 - ~~Segmentation~~ -> <f4882b4e8177e5b4e5ba87804d9a2dc5b8132d52>
 - ~~Debug Device COM1~~ -> b0f295ca76443b21af12a9af9dae1fa52ec614b9

@@ -40,12 +40,12 @@ typedef struct idtr {
     uint32_t address;
 } __attribute__((packed)) idtr_t;
 
-IntExtern(00);
+IntExtern(03);
 
 void initInterrupt(void);
 void lidt(idtr_t *idtr);
 void intSetDesc(int index, uint32_t addr, uint16_t flag);
 
-void intHandlerDiv(int_frame_t stack);
+void intHandlerDebug(int_frame_t stack);
 
 #endif

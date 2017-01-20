@@ -1,5 +1,6 @@
 #include "irq/interrupt.h"
 #include "util/string.h"
+#include "util/log.h"
 
 static idt_t idt[IntLength];
 
@@ -7,7 +8,7 @@ static idtr_t idtr;
 
 void initInterrupt() {
     memset(idt, 0, IntLength * sizeof(idt_t));
-    IntSet(00, IntInteSys);
+    IntSet(03, IntInteSys);
 
     idtr.limit = IntLength * sizeof(idt_t);
     idtr.address = (uint32_t) idt;
@@ -26,6 +27,8 @@ void intSetDesc(int index, uint32_t addr, uint16_t flag) {
     idt[index] = desc;
 }
 
-void intHandlerDiv(int_frame_t stack) {
+void intHandlerDebug(int_frame_t stack) {
     stack = stack;
+
+    klog("int 0x03 triggered!");
 }

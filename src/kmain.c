@@ -6,23 +6,27 @@
 #include "irq/interrupt.h"
 #include "util/string.h"
 #include "util/multiboot.h"
+#include "util/log.h"
 
 int kmain(multiboot_info_t *mbi) {
     initSegment();
     initInterrupt();
     initKmem();
     initDevice();
+
     device_t *com1 = initSerial(SerialCOM1);
     device_t *fb = initFB();
+    klogSetDevice(com1);
+
+    klog("log start");
 
     char *str = "hello world!\n";
     int len = strlen(str);
-    deviceWrite(com1, str, len);
     deviceWrite(fb, str, len);
 
     mbi = mbi;
 
-    __asm__("int $0;");
+    __asm__("int3\n");
 
     return 0;
 }

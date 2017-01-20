@@ -26,4 +26,4 @@ lidt:
     ret
 .size lidt, . - lidt
 
-wrapInterrupt 00, intHandlerDiv
+wrapInterrupt 03, intHandlerDebug

@@ -26,11 +26,6 @@ kPDT:
 
 _kPDT = kPDT - GlobalOffset
 
-.align 4
-kernelStackBottom:
-    .skip StackSize
-kernelStackTop:
-
 .section .text
 .align 4
 
@@ -55,8 +50,8 @@ _loader:
     pushl $.Flush
     ret
 .Flush:
-    movl $kernelStackTop, %esp
-    movl $kernelStackTop, %ebp
+    movl $kstack, %esp
+    movl $kstack, %ebp
     pushl %ebx
     call kmain
     cli

@@ -21,4 +21,6 @@ SECTIONS {
     }
 
     kbrk = ALIGN(4K);
+
+    kstack = 4M + GlobalOffset;
 }

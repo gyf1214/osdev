@@ -47,6 +47,6 @@ void segLoadFS(uint16_t sel);
 void segLoadGS(uint16_t sel);
 void segLoadSS(uint16_t sel);
 void segLoadCS(uint16_t sel);
-void segLoadGDT(gdtr_t *gdtr);
+void lgdt(gdtr_t *gdtr);
 
 #endif

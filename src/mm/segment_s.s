@@ -27,10 +27,10 @@ segLoadCS:
     ret
 .size segLoadCS, . - segLoadCS
 
-.global segLoadGDT
-.type segLoadGDT, @function
-segLoadGDT:
+.global lgdt
+.type lgdt, @function
+lgdt:
     movl 4(%esp), %eax
     lgdt (%eax)
     ret
-.size segLoadGDT, . - segLoadGDT
+.size lgdt, . - lgdt

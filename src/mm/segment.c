@@ -29,7 +29,7 @@ void initSegment() {
 
     gdtr.address = (uint32_t)gdt;
     gdtr.limit = SegLength * sizeof(gdt_t);
-    segLoadGDT(&gdtr);
+    lgdt(&gdtr);
 
     uint16_t sel = SegSel(2, SegSelSys);
     segLoadDS(sel);

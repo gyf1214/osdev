@@ -20,7 +20,7 @@ SECTIONS {
         *(.bss)
     }
 
-    kbrk = ALIGN(4K);
+    kBSSEnd = ALIGN(4K);
 
-    kstack = 4M + GlobalOffset;
+    kStack = 4M + GlobalOffset;
 }

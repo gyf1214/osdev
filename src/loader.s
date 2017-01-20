@@ -50,8 +50,8 @@ _loader:
     pushl $.Flush
     ret
 .Flush:
-    movl $kstack, %esp
-    movl $kstack, %ebp
+    movl $kStack, %esp
+    movl $kStack, %ebp
     pushl %ebx
     call kmain
     cli

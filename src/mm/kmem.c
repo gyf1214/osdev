@@ -1,21 +1,21 @@
 #include "mm/kmem.h"
 
 static kptr_t kbrk;
-static kmem_cache_t kCache[kmemCacheSize];
+static kmem_cache_t kCache[KmemCacheLength];
 
 void initKmem() {
     kbrk = &kBSSEnd;
 }
 
 void *ksbrk(size_t size) {
-    size = kmemAlign(size);
+    size = KmemAlign(size);
     void *ret = kbrk;
     kbrk += size;
     return ret;
 }
 
 void kmemInitCache(int cache, size_t size, ctor_t ctor) {
-    size = kmemAlign(size);
+    size = KmemAlign(size);
     kCache[cache].head = NULL;
     kCache[cache].size = size;
     kCache[cache].ctor = ctor;
@@ -30,13 +30,13 @@ void *kalloc(int cache) {
         return ret;
     } else {
         kptr_t ret = kCache[cache].head;
-        kCache[cache].head = kmemNext(ret);
+        kCache[cache].head = KmemNext(ret);
         if (ctor) ctor(ret, size);
         return ret;
     }
 }
 
 void kfree(int cache, void *ptr) {
-    kmemNext(ptr) = kCache[cache].head;
+    KmemNext(ptr) = kCache[cache].head;
     kCache[cache].head = (kptr_t) ptr;
 }

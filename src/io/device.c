@@ -14,7 +14,7 @@ static void deviceCtor(void *ptr, size_t size) {
 }
 
 void initDevice() {
-    kmemInitCache(kmemDevice, sizeof(device_t), deviceCtor);
+    kmemInitCache(KmemDevice, sizeof(device_t), deviceCtor);
 }
 
 void deviceWrite(device_t *dev, const char *data, size_t n) {

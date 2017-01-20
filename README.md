@@ -56,6 +56,7 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Debug Device COM1
 - [x] Generic Device Manager
 - [x] Framebuffer
+- [ ] Generic PCI
 - [ ] ATA/ATAPI Disk
 - [ ] Filesystem ISO9660
 

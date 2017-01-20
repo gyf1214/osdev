@@ -9,6 +9,7 @@
 #define KmemNext(x)     (*((kptr_t *)(x)))
 
 #define KmemDevice      0
+#define KmemPCI         1
 
 typedef char *kptr_t;
 typedef void (*ctor_t)(void *, size_t);

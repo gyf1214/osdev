@@ -23,8 +23,8 @@ ISOFLAGS = -R -b $(GRUBPATH)/$(GRUBBOOT) -no-emul-boot -boot-load-size 4 \
 		   -boot-info-table -input-charset utf8 -A os
 
 LIB = mm/segment io/port io/serial io/device util/string io/framebuffer \
-	  mm/kmem
-OBJ = loader kmain mm/segment_s $(LIB)
+	  mm/kmem irq/interrupt
+OBJ = loader kmain mm/segment_s irq/interrupt_s $(LIB)
 LIBFILE = $(patsubst %, $(OBJPATH)/%.o, $(LIB))
 LIBHEADER = $(patsubst %, $(SRCPATH)/%.h, $(LIB))
 OBJFILE = $(patsubst %, $(OBJPATH)/%.o, $(OBJ))

@@ -1,41 +1,20 @@
+.macro segLoadSeg name
+    .global segLoad\name
+    .type segLoad\name, @function
+    segLoad\name :
+        movw 4(%esp), %\name
+        ret
+    .size segLoad\name, . - segLoad\name
+.endm
+
 .section .text
 .align 4
 
-.global segLoadDS
-.type segLoadDS, @function
-segLoadDS:
-    movw 4(%esp), %ds
-    ret
-.size segLoadDS, . - segLoadDS
-
-.global segLoadES
-.type segLoadES, @function
-segLoadES:
-    movw 4(%esp), %es
-    ret
-.size segLoadES, . - segLoadES
-
-.global segLoadFS
-.type segLoadFS, @function
-segLoadFS:
-    movw 4(%esp), %fs
-    ret
-.size segLoadFS, . - segLoadFS
-
-.global segLoadGS
-.type segLoadGS, @function
-segLoadGS:
-    movw 4(%esp), %gs
-    ret
-.size segLoadGS, . - segLoadGS
-
-.global segLoadSS
-.type segLoadSS, @function
-segLoadSS:
-    movw 4(%esp), %ss
-    ret
-.size segLoadSS, . - segLoadSS
-
+segLoadSeg DS
+segLoadSeg ES
+segLoadSeg FS
+segLoadSeg GS
+segLoadSeg SS
 
 .global segLoadCS
 .type segLoadCS, @function

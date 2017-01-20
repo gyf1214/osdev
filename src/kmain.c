@@ -2,8 +2,9 @@
 #include "io/device.h"
 #include "io/framebuffer.h"
 #include "util/string.h"
+#include "util/multiboot.h"
 
-int kmain() {
+int kmain(multiboot_info_t *mbi) {
     initSegment();
     initDevice();
 
@@ -11,6 +12,8 @@ int kmain() {
     int len = strlen(str);
     deviceWrite(&deviceCOM1, str, len);
     deviceWrite(&deviceFB, str, len);
+
+    mbi = mbi;
 
     return 0;
 }

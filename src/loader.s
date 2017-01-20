@@ -57,6 +57,7 @@ _loader:
 .Flush:
     movl $kernelStackTop, %esp
     movl $kernelStackTop, %ebp
+    pushl %ebx
     call kmain
     cli
 .L:

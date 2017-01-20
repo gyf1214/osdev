@@ -88,13 +88,13 @@ static void fbPutRegularChar(char ch) {
 
 void fbPutChar(char ch) {
     switch (ch) {
-        case '\n':
+    case '\n':
         fbNewLine();
         break;
-        case '\r':
+    case '\r':
         fbBackspace();
         break;
-        default:
+    default:
         fbPutRegularChar(ch);
         break;
     }

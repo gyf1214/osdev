@@ -1,7 +1,8 @@
 #include "io/pci.h"
 #include "io/port.h"
+#include "mm/kmem.h"
 
-pci_info_t *pciList = NULL;
+pci_info_t *pciList;
 
 uint32_t pciConfigReadLong(uint8_t bus, uint8_t slot,
                            uint8_t func, uint8_t offset) {
@@ -9,8 +10,9 @@ uint32_t pciConfigReadLong(uint8_t bus, uint8_t slot,
 
     addr    =   PCIAddrPres;
     addr   |= ((uint32_t)bus)       << 16;
-    addr   |= ((uint32_t)slot)    << 11;
+    addr   |= ((uint32_t)slot)      << 11;
     addr   |= ((uint32_t)func)      << 8;
+    addr   |= ((uint32_t)offset)    &  0xfc;
 
     outl(PCIConfigAddr, addr);
     return inl(PCIConfigData);
@@ -46,6 +48,12 @@ pci_info_t *pciCheckFunction(uint8_t bus, uint8_t slot, uint8_t func) {
         base[i] = pciConfigReadLong(bus, slot, func, i * 4);
     }
 
+    if (device -> class == PCIBridge && device -> subclass == PCIPCIBridge) {
+        temp = pciConfigReadLong(bus, slot, func, 0x18);
+        uint8_t secondary = (temp >> 8) & 0xff;
+        pciCheckBus(secondary);
+    }
+
     return device;
 }
 
@@ -60,4 +68,27 @@ void pciCheckDevice(uint8_t bus, uint8_t slot) {
             pciCheckFunction(bus, slot, func);
         }
     }
+}
+
+void pciCheckAll() {
+    uint8_t func;
+    uint32_t temp;
+
+    temp = pciConfigReadLong(0, 0, 0, 0xc);
+    if ((temp >> 16) & PCIHeaderMF) {
+        for (func = 0; func < PCIFuncLength; ++func) {
+            temp = pciConfigReadLong(0, 0, func, 0);
+            if ((temp & 0xffff) != PCINull) {
+                pciCheckBus(func);
+            }
+        }
+    } else {
+        pciCheckBus(0);
+    }
+}
+
+void initPCI(void) {
+    kmemInitCache(KmemPCI, sizeof(pci_info_t), NULL);
+    pciList = NULL;
+    pciCheckAll();
 }

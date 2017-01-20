@@ -13,14 +13,19 @@
 #define PCIHeaderMF     (1 << 7)
 #define PCINull         0xffff
 
+#define PCIBarLength    5
 #define PCIInfoSize     9
+
+#define PCIBridge       0x06
+
+#define PCIPCIBridge    0x04
 
 typedef struct pci_info {
     uint8_t bus, slot, func;
     uint16_t vendorID, deviceID;
     uint16_t command, status;
-    uint8_t class, subclass, progIF, revisionID;
-    uint8_t bist, headerType, latency, cacheLine;
+    uint8_t revisionID, progIF, subclass, class;
+    uint8_t cacheLine, latency, headerType, bist;
     uint32_t bar[PCIBarLength];
     struct pci_info *next;
 } pci_info_t;

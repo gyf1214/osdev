@@ -1,6 +1,7 @@
 #include "mm/segment.h"
 #include "mm/kmem.h"
 #include "io/device.h"
+#include "io/pci.h"
 #include "io/serial.h"
 #include "io/framebuffer.h"
 #include "irq/interrupt.h"
@@ -13,6 +14,7 @@ int kmain(multiboot_info_t *mbi) {
     initInterrupt();
     initKmem();
     initDevice();
+    initPCI();
 
     device_t *com1 = initSerial(SerialCOM1);
     device_t *fb = initFB();

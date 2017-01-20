@@ -36,8 +36,8 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 
 ## Progress ##
 
-- ~~Bare Bones~~ -> 968c88af0338d79dabe5114f52da91cae860e82c
-- ~~Segmentation~~ -> f4882b4e8177e5b4e5ba87804d9a2dc5b8132d52
+- ~~Bare Bones~~ -> <968c88af0338d79dabe5114f52da91cae860e82c>
+- ~~Segmentation~~ -> <f4882b4e8177e5b4e5ba87804d9a2dc5b8132d52>
 - ~~Debug Device COM1~~ -> b0f295ca76443b21af12a9af9dae1fa52ec614b9
 - ~~Generic Device Manager~~ -> e0d4bbfed3f568b1478fe21b154d751a3d67c826
 - ~~Framebuffer~~ -> 8db4a0b7482592ded2f6b00db1ee78467cc12347

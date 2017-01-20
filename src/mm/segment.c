@@ -31,11 +31,10 @@ void initSegment() {
     gdtr.limit = SegLength * sizeof(gdt_t);
     lgdt(&gdtr);
 
-    uint16_t sel = SegSel(2, SegSelSys);
-    segLoadDS(sel);
-    segLoadES(sel);
-    segLoadFS(sel);
-    segLoadGS(sel);
-    segLoadSS(sel);
-    segLoadCS(SegSel(1, SegSelSys));
+    segLoadDS(SegSelDataSys);
+    segLoadES(SegSelDataSys);
+    segLoadFS(SegSelDataSys);
+    segLoadGS(SegSelDataSys);
+    segLoadSS(SegSelDataSys);
+    segLoadCS(SegSelCodeSys);
 }

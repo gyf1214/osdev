@@ -28,9 +28,13 @@
 
 #define SegLength   5
 
-#define SegSelSys   0
-#define SegSelUsr   3
-#define SegSel(i, flag)  (((i) << 3) | (flag))
+#define SegRPLSys   0
+#define SegRPLUsr   3
+#define SegSel(i, flag) (((i) << 3) | (flag))
+#define SegSelCodeSys   SegSel(1, SegRPLSys)
+#define SegSelDataSys   SegSel(2, SegRPLSys)
+#define SegSelCodeUsr   SegSel(3, SegRPLUsr)
+#define SegSelDataUsr   SegSel(4, SegRPLUsr)
 
 typedef uint64_t    gdt_t;
 

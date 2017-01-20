@@ -36,21 +36,32 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 
 ## Progress ##
 
+### Framework ###
+
 - [x] Bare Bones
+- [x] Higher Address Kernel
+- [x] Switch to `qemu` & `gdb`
+- [x] `multiboot` Info
+- [ ] ELF Loader
+
+### Memory ###
+
 - [x] Segmentation
+- [x] Kernel Object Manager
+- [ ] Frame Allocator
+- [ ] User Mode Paging
+
+### IO ###
+
 - [x] Debug Device COM1
 - [x] Generic Device Manager
 - [x] Framebuffer
-- [x] Allow Paging & Switch to Higher Address Kernel
-- [x] Switch to `qemu` & `gdb`
-- [x] `multiboot` Info
-- [x] Kernel Object Manager
-- [x] Interrupt
 - [ ] ATA/ATAPI Disk
 - [ ] Filesystem ISO9660
-- [ ] Frame Allocator
-- [ ] User Mode Paging
-- [ ] ELF Loader
+
+### Interrupt Requests ###
+
+- [x] Interrupt
 
 ## Author ##
 

@@ -54,6 +54,7 @@
 #define ATADeviceLength     4
 #define ATAModelLength      40
 #define ATAIdentLength      256
+#define ATAPollTry          10240
 
 typedef struct ata_channel {
     uint16_t base, control, bmide;
@@ -73,7 +74,7 @@ typedef struct ata_device {
 extern ata_device_t *ataList;
 
 void initATA(void);
-void ataSelect(ata_channel_t *channel, uint8_t type);
+int ataSelect(ata_channel_t *channel, uint8_t type);
 int ataPoll(ata_channel_t *channel, uint8_t mask);
 
 #endif

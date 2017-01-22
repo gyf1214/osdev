@@ -10,7 +10,7 @@ static uint16_t identBuf[ATAIdentLength];
 ata_device_t *ataList = NULL;
 
 static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
-    ataSelect(channel, type);
+    if (!ataSelect(channel, type)) return NULL;
 
     outb(ATARegCommand(channel), ATACmdIdent);
     uint8_t status = inb(ATARegStatus(channel));
@@ -94,19 +94,24 @@ void initATA() {
     }
 }
 
-void ataSelect(ata_channel_t *channel, uint8_t type) {
-    if (channel -> selected == type) return;
+int ataSelect(ata_channel_t *channel, uint8_t type) {
+    if (channel -> selected == type) return 1;
 
     outb(ATARegDrive(channel), type);
     int i;
     for (i = 0; i < ATADelay; ++i) {
         inb(ATARegStatus(channel));
     }
+
+    return !(ataPoll(channel, 0) & ATAStatusBSY);
 }
 
 int ataPoll(ata_channel_t *channel, uint8_t mask) {
-    for (;;) {
-        uint8_t status = inb(ATARegStatus(channel));
-        if (!(status & ATAStatusBSY) || (status & mask)) return status;
+    int i;
+    uint8_t status;
+    for (i = 0; i < ATAPollTry; ++i) {
+        status = inb(ATARegStatus(channel));
+        if (!(status & ATAStatusBSY) && (!mask || (status & mask))) return status;
     }
+    return status;
 }

@@ -2,6 +2,7 @@
 #include "io/port.h"
 #include "io/pci.h"
 #include "mm/kmem.h"
+#include "util/string.h"
 
 static uint16_t identBuf[ATAIdentLength];
 
@@ -14,14 +15,12 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
     if (!inb(ATARegStatus(channel))) return NULL;
 
     uint8_t status = ataPoll(channel, ATAStatusERR | ATAStatusDRQ);
-    int atapi = 0;
 
     if (status & ATAStatusERR) {
         uint16_t cc = inb(ATARegLBA1(channel));
         cc |= inb(ATARegLBA2(channel)) << 16;
         if (cc != ATAPIMagic1 && cc != ATAPIMagic2) return NULL;
 
-        atapi = 1;
         outb(ATARegCommand(channel), ATACmdIdentPacket);
         ataPoll(channel, ATAStatusDRQ);
     }
@@ -67,14 +66,6 @@ static void ataDetectChannel(uint32_t *bar, uint32_t def1, uint32_t def2) {
     if (!master && !slave) kfree(KmemATAChannel, channel);
 }
 
-static void ataDetectAll(uint32_t *bar) {
-    memset(ataDeviceBuf, 0, ATADeviceLength * sizeof(ata_device_t *));
-    ataDeviceCount = 0;
-
-    ataDetectChannel(bar    , ATAPrimaryBase, ATAPrimaryControl);
-    ataDetectChannel(bar + 2, ATASecondaryBase, ATASecondaryControl);
-}
-
 void initATA() {
     kmemInitCache(KmemATAChannel, sizeof(ata_channel_t), NULL);
     kmemInitCache(KmemATADevice, sizeof(ata_device_t), NULL);
@@ -82,7 +73,8 @@ void initATA() {
     pci_info_t *pci;
     for (pci = pciList; pci; pci = pci -> next) {
         if (pci -> class == PCIStorage && pci -> subclass == PCIIDE) {
-            ataDetectAll(pci -> bar);
+            ataDetectChannel(pci -> bar, ATAPrimaryBase, ATAPrimaryControl);
+            ataDetectChannel(pci -> bar + 2, ATASecondaryBase, ATASecondaryControl);
         }
     }
 }
@@ -102,7 +94,7 @@ void ataSelect(ata_channel_t *channel, uint8_t type) {
 int ataPoll(ata_channel_t *channel, uint8_t mask) {
     if (!mask) mask = 0xff;
     for (;;) {
-        status = inb(ATARegStatus(channel));
+        uint8_t status = inb(ATARegStatus(channel));
         if (!(status & ATAStatusBSY) && (status & mask)) return status;
     }
 }

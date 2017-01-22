@@ -2,6 +2,7 @@
 #include "mm/kmem.h"
 #include "io/device.h"
 #include "io/pci.h"
+#include "io/ata.h"
 #include "io/serial.h"
 #include "io/framebuffer.h"
 #include "irq/interrupt.h"
@@ -20,6 +21,7 @@ int kmain(multiboot_info_t *mbi) {
     klog("log start");
 
     initPCI();
+    initATA();
 
     device_t *fb = initFB();
 

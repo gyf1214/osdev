@@ -42,6 +42,7 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Higher Address Kernel
 - [x] Switch to `qemu` & `gdb`
 - [x] `multiboot` Info
+- [ ] Upgrade to GRUB2
 - [ ] ELF Loader
 
 ### Memory ###

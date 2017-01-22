@@ -10,6 +10,8 @@
 
 #define KmemDevice      0
 #define KmemPCI         1
+#define KmemATAChannel  2
+#define KmemATADevice   3
 
 typedef char *kptr_t;
 typedef void (*ctor_t)(void *, size_t);

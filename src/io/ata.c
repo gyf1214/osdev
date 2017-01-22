@@ -10,8 +10,6 @@ static uint16_t identBuf[ATAIdentLength];
 ata_device_t *ataList = NULL;
 
 static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
-    klog("detect ata device");
-
     ataSelect(channel, type);
 
     outb(ATARegCommand(channel), ATACmdIdent);
@@ -60,15 +58,15 @@ inline static uint32_t ataAddress(uint32_t bar, uint32_t def) {
 }
 
 static void ataDetectChannel(uint32_t *bar, uint32_t def1, uint32_t def2) {
-    klog("detect channel");
-
     ata_channel_t *channel = kalloc(KmemATAChannel);
     channel -> base     = ataAddress(bar[0], def1);
     channel -> control  = ataAddress(bar[1], def2);
     channel -> bmide    = 0;
     channel -> selected = 0;
 
+    klog("detect ide master");
     ata_device_t *master = ataDetectDevice(channel, ATADriveMaster);
+    klog("detect ide slave");
     ata_device_t *slave  = ataDetectDevice(channel, ATADriveSlave);
 
     if (!master && !slave) kfree(KmemATAChannel, channel);
@@ -83,9 +81,9 @@ void initATA() {
     pci_info_t *pci;
     for (pci = pciList; pci; pci = pci -> next) {
         if (pci -> class == PCIStorage && pci -> subclass == PCIIDE) {
-            klog("detect ide device");
-
+            klog("detect ide primary");
             ataDetectChannel(pci -> bar, ATAPrimaryBase, ATAPrimaryControl);
+            klog("detect ide secondary");
             ataDetectChannel(pci -> bar + 2, ATASecondaryBase, ATASecondaryControl);
         }
     }

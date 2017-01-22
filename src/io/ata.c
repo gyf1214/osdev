@@ -3,12 +3,15 @@
 #include "io/pci.h"
 #include "mm/kmem.h"
 #include "util/string.h"
+#include "util/log.h"
 
 static uint16_t identBuf[ATAIdentLength];
 
 ata_device_t *ataList = NULL;
 
 static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
+    klog("detect ata device");
+
     ataSelect(channel, type);
 
     outb(ATARegCommand(channel), ATACmdIdent);
@@ -45,6 +48,8 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
         dev -> size = *((uint32_t *)(identBuf + ATAIdentSize));
     }
 
+    klog(ATAIdentATAPI(dev) ? "found atapi device" : "found ata device");
+
     return dev;
 }
 
@@ -54,6 +59,8 @@ inline static uint32_t ataAddress(uint32_t bar, uint32_t def) {
 }
 
 static void ataDetectChannel(uint32_t *bar, uint32_t def1, uint32_t def2) {
+    klog("detect channel");
+
     ata_channel_t *channel = kalloc(KmemATAChannel);
     channel -> base     = ataAddress(bar[0], def1);
     channel -> control  = ataAddress(bar[1], def2);
@@ -67,12 +74,16 @@ static void ataDetectChannel(uint32_t *bar, uint32_t def1, uint32_t def2) {
 }
 
 void initATA() {
+    klog("init ata");
+
     kmemInitCache(KmemATAChannel, sizeof(ata_channel_t), NULL);
     kmemInitCache(KmemATADevice, sizeof(ata_device_t), NULL);
 
     pci_info_t *pci;
     for (pci = pciList; pci; pci = pci -> next) {
         if (pci -> class == PCIStorage && pci -> subclass == PCIIDE) {
+            klog("detect ide device");
+
             ataDetectChannel(pci -> bar, ATAPrimaryBase, ATAPrimaryControl);
             ataDetectChannel(pci -> bar + 2, ATASecondaryBase, ATASecondaryControl);
         }

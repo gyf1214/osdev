@@ -1,6 +1,7 @@
 #include "io/pci.h"
 #include "io/port.h"
 #include "mm/kmem.h"
+#include "util/log.h"
 
 pci_info_t *pciList;
 
@@ -88,7 +89,11 @@ void pciCheckAll() {
 }
 
 void initPCI(void) {
+    klog("init pci");
+
     kmemInitCache(KmemPCI, sizeof(pci_info_t), NULL);
     pciList = NULL;
     pciCheckAll();
+
+    klog("pci detection finished");
 }

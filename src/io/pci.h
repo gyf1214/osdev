@@ -17,8 +17,10 @@
 #define PCIInfoSize     9
 
 #define PCIBridge       0x06
+#define PCIStorage      0x01
 
 #define PCIPCIBridge    0x04
+#define PCIIDE          0x01
 
 typedef struct pci_info {
     uint8_t bus, slot, func;

@@ -14,13 +14,14 @@ int kmain(multiboot_info_t *mbi) {
     initInterrupt();
     initKmem();
     initDevice();
-    initPCI();
 
     device_t *com1 = initSerial(SerialCOM1);
-    device_t *fb = initFB();
     klogSetDevice(com1);
-
     klog("log start");
+
+    initPCI();
+
+    device_t *fb = initFB();
 
     char *str = "hello world!\n";
     int len = strlen(str);

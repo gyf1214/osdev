@@ -51,3 +51,36 @@ inl:
     inl %dx, %eax
     ret
 .size inl, . - inl;
+
+.global insb
+.type insb, @function
+insb:
+    movw 4(%esp), %dx
+    movl 8(%esp), %edi
+    movl 12(%esp), %ecx
+    cld
+    rep insb
+    ret
+.size insb, . - insb
+
+.global insw
+.type insw, @function
+insw:
+    movw 4(%esp), %dx
+    movl 8(%esp), %edi
+    movl 12(%esp), %ecx
+    cld
+    rep insw
+    ret
+.size insw, . - insw
+
+.global insl
+.type insl, @function
+insl:
+    movw 4(%esp), %dx
+    movl 8(%esp), %edi
+    movl 12(%esp), %ecx
+    cld
+    rep insl
+    ret
+.size insl, . - insl

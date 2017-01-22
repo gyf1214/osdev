@@ -33,16 +33,21 @@ BOCHS = bochs
 BOCHSRC = .bochsrc
 BOCHSFLAGS = -f $(BOCHSRC) -q
 
+HDD = tmp/hdd.vmdk
+HDDSIZE = 64M
+
 QEMU = qemu-system-i386
+QEMUIMAGE = qemu-img
+QEMUIMAGEFLAGS = -f vmdk
 QEMULOG = tmp/qemu.log
 QEMUSERIAL = tmp/com1.log
 QEMUFLAGS = -D $(QEMULOG) -serial file:$(QEMUSERIAL) -s -S \
-			-drive file=tmp/hdd.vmdk,if=ide,index=0,media=disk,format=vmdk \
+			-drive file=$(HDD),if=ide,index=0,media=disk,format=vmdk \
  			-drive file=$(IMAGE),if=ide,index=1,media=cdrom
 
 GDB = i386-elf-gdb
 
-all : $(IMAGE)
+all : $(IMAGE) $(HDD)
 
 run : all
 	$(GDB)
@@ -57,6 +62,9 @@ clean :
 
 $(TMPPATH) :
 	mkdir -p $@
+
+$(HDD) : makefile
+	$(QEMUIMAGE) create $(QEMUIMAGEFLAGS) $(HDD) $(HDDSIZE)
 
 $(IMAGE) : $(TARGET) $(GRUBFILE) makefile
 	$(ISO) $(ISOFLAGS) -o $(IMAGE) $(TARPATH)

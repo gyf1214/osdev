@@ -113,5 +113,6 @@ int ataPoll(ata_channel_t *channel, uint8_t mask) {
         status = inb(ATARegStatus(channel));
         if (!(status & ATAStatusBSY) && (!mask || (status & mask))) return status;
     }
+    klog("ide device hang!!!!");
     return status;
 }

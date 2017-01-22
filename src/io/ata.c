@@ -21,8 +21,8 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
     status = ataPoll(channel, ATAStatusERR | ATAStatusDRQ);
 
     if (status & ATAStatusERR) {
-        uint16_t cc = inw(ATARegLBA1(channel));
-        cc |= inb(ATARegLBA2(channel)) << 16;
+        uint16_t cc = inb(ATARegLBA1(channel));
+        cc |= inb(ATARegLBA2(channel)) << 8;
         if (cc != ATAPIMagic1 && cc != ATAPIMagic2) return NULL;
 
         outb(ATARegCommand(channel), ATACmdIdentPacket);
@@ -99,13 +99,11 @@ void ataSelect(ata_channel_t *channel, uint8_t type) {
     for (i = 0; i < ATADelay; ++i) {
         inb(ATARegStatus(channel));
     }
-
-    ataPoll(channel, 0);
 }
 
 int ataPoll(ata_channel_t *channel, uint8_t mask) {
     for (;;) {
         uint8_t status = inb(ATARegStatus(channel));
-        if (!(status & ATAStatusBSY) && (!mask || (status & mask))) return status;
+        if (!(status & ATAStatusBSY) || (status & mask)) return status;
     }
 }

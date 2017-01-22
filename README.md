@@ -8,7 +8,11 @@ Since I use both x86-64 Mac OS X as host os & GRUB to boot kernel, so I use cros
 
 So change toolchain in `makefile` if needed
 
-`mkisofs` (which is available on Mac) is used as the tool to generate iso files
+~~`mkisofs` (which is available on Mac) is used as the tool to generate iso files~~
+
+`grub-mkrescue` is used to generate the iso file with GRUB 2 as the boot loader
+
+`grub-mkrescue` is built for target `i386-elf` (so partly by the cross toolchain) under OS X
 
 Just `make all` to build the final `os.iso`
 
@@ -20,11 +24,13 @@ Switch to `qemu` to enable debugging with `gdb`
 
 A `.gdbinit` is provided to configure & link `gdb` with `qemu`
 
-The boot loader is GRUB 0.97, using `stage2_eltorito` for ISO
+~~The boot loader is GRUB 0.97, using `stage2_eltorito` for ISO~~
 
-Both the GRUB binary and `menu.lst` are provided
+~~Both the GRUB binary and `menu.lst` are provided~~
 
 ~~Use `make run` to start the simulator if `bochs` is installed~~
+
+The boot loader is GRUB 2, a default `grub.cfg` is provided
 
 Use `make qemu` to start the simulator __in background__
 
@@ -42,7 +48,7 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Higher Address Kernel
 - [x] Switch to `qemu` & `gdb`
 - [x] `multiboot` Info
-- [ ] Upgrade to GRUB2
+- [x] Upgrade to GRUB 2
 - [ ] ELF Loader
 
 ### Memory ###

@@ -38,7 +38,11 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
     dev -> next         = ataList;
     ataList             = dev;
 
-    memcpy(dev -> model, identBuf + ATAIdentModel, ATAModelLength);
+    int k;
+    for (k = 0; k < ATAModelLength / 2; ++k) {
+        dev -> model[2 * k] = (identBuf[k + ATAIdentModel] >> 8) & 0xff;
+        dev -> model[2 * k + 1] = identBuf[k + ATAIdentModel] & 0xff;
+    }
     dev -> model[ATAModelLength] = 0;
 
     if (ATAIdentLBA48(dev)) {
@@ -48,6 +52,7 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
     }
 
     klog(ATAIdentATAPI(dev) ? "found atapi device" : "found ata device");
+    klog(dev -> model);
 
     return dev;
 }

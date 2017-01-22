@@ -30,8 +30,7 @@ _kPDT = kPDT - GlobalOffset
 
 .global loader
 .type loader, @function
-loader = _loader - GlobalOffset
-_loader:
+loader:
     movl $FirstPage, _kPDT
     movl $FirstPage, _kPDT + (GlobalOffset >> 20)
 
@@ -57,4 +56,4 @@ _loader:
 .L:
     hlt
     jmp .L
-.size loader, . - _loader
+.size loader, . - loader

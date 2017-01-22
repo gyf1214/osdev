@@ -10,17 +10,15 @@ SRCPATH = src
 OBJPATH = obj
 TARPATH = bin
 TMPPATH = tmp
-GRUBPATH = boot/grub
+GRUBPATH = bin/boot/grub
 
 LDSCRIPT = $(SRCPATH)/link.ld
 LDFLAGS = -T $(LDSCRIPT) -melf_i386
 
-GRUBMENU = menu.lst
-GRUBBOOT = stage2_eltorito
-
-ISO = mkisofs
-ISOFLAGS = -R -b $(GRUBPATH)/$(GRUBBOOT) -no-emul-boot -boot-load-size 4 \
-		   -boot-info-table -input-charset utf8 -A os
+ISO = grub-mkrescue
+ISOFLAGS =
+GRUB = grub.cfg
+GRUBFILE = $(patsubst %, $(GRUBPATH)/%, $(GRUB))
 
 LIB = mm/segment io/port io/serial io/device util/string io/framebuffer \
 	  mm/kmem irq/interrupt util/log io/pci io/ata
@@ -65,6 +63,10 @@ $(IMAGE) : $(TARGET) $(GRUBFILE) makefile
 $(TARGET) : $(OBJFILE) $(LDSCRIPT) makefile
 	mkdir -p $(dir $@)
 	$(LD) $(LDFLAGS) -o $@ $(OBJFILE)
+
+$(GRUBPATH)/% : $(SRCPATH)/% makefile
+	mkdir -p $(dir $@)
+	cp $< $@
 
 $(OBJPATH)/%.o : $(SRCPATH)/%.s makefile
 	mkdir -p $(dir $@)

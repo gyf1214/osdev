@@ -17,17 +17,17 @@ int kmain(multiboot_info_t *mbi) {
     initDevice();
 
     device_t *com1 = initSerial(SerialCOM1);
-    klogSetDevice(com1);
+    device_t *fb = initFB();
+    klogSetDevice(fb);
     klog("log start");
 
     initPCI();
     initATA();
 
-    device_t *fb = initFB();
-
     char *str = "hello world!\n";
     int len = strlen(str);
     deviceWrite(fb, str, len);
+    deviceWrite(com1, str, len);
 
     mbi = mbi;
 

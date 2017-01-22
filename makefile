@@ -39,7 +39,7 @@ QEMU = qemu-system-i386
 QEMULOG = tmp/qemu.log
 QEMUSERIAL = tmp/com1.log
 QEMUFLAGS = -D $(QEMULOG) -serial file:$(QEMUSERIAL) -s -S \
- 			-drive file=$(IMAGE),if=ide,index=2,media=cdrom
+ 			-drive file=$(IMAGE),if=ide,index=3,media=cdrom
 
 GDB = i386-elf-gdb
 

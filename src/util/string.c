@@ -15,11 +15,12 @@ void *memset(void *ptr, int ch, size_t size) {
     return ptr;
 }
 
-void memcpy(void *restrict dst, const void *restrict src, size_t size) {
-    char *restrict d = (char *)dst;
-    const char *restrict s = (const char *)src;
+void *memcpy(void *dst, const void *src, size_t size) {
+    char *d = (char *)dst;
+    const char *s = (const char *)src;
 
     while (size-- > 0) {
         *d++ = *s++;
     }
+    return dst;
 }

@@ -21,7 +21,7 @@ static ata_device_t *ataDetectDevice(ata_channel_t *channel, uint8_t type) {
     if (status & ATAStatusERR) {
         uint16_t cc = inb(ATARegLBA1(channel));
         cc |= inb(ATARegLBA2(channel)) << 8;
-        if (cc != ATAPIMagic1 && cc != ATAPIMagic2) return NULL;
+        if (cc != ATAPIMagic) return NULL;
 
         outb(ATARegCommand(channel), ATACmdIdentPacket);
         ataPoll(channel, ATAStatusDRQ);

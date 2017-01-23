@@ -37,6 +37,7 @@
 
 #define ATAPIMagic1         0xeb14
 #define ATAPIMagic2         0x9669
+#define ATAPIMagic          ATAPIMagic1
 
 #define ATADelay            4
 

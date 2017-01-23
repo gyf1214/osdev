@@ -40,4 +40,13 @@ sti:
     ret
 .size sti, . - sti
 
+.global stihlt
+.type stihlt, @function
+stihlt:
+    sti
+    hlt
+    ret
+.size stihlt, . - stihlt
+
 wrapInterrupt 03, intDebugHandler
+wrapInterrupt 40, rtcPeriodicHandler

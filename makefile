@@ -21,7 +21,7 @@ GRUB = grub.cfg
 GRUBFILE = $(patsubst %, $(GRUBPATH)/%, $(GRUB))
 
 LIB = mm/segment io/port io/serial io/device util/string io/framebuffer \
-	  mm/kmem irq/interrupt util/log io/pci io/ata
+	  mm/kmem irq/interrupt util/log io/pci io/ata irq/pic irq/rtc
 OBJ = loader kmain mm/segment_s irq/interrupt_s $(LIB)
 LIBFILE = $(patsubst %, $(OBJPATH)/%.o, $(LIB))
 LIBHEADER = $(patsubst %, $(SRCPATH)/%.h, $(LIB))
@@ -42,12 +42,11 @@ QEMUIMAGEFLAGS = -f vmdk
 QEMULOG = tmp/qemu.log
 QEMUSERIAL = tmp/com1.log
 QEMUFLAGS = -D $(QEMULOG) -serial file:$(QEMUSERIAL) -s -S \
-			-drive file=$(HDD),if=ide,index=0,media=disk,format=vmdk \
  			-drive file=$(IMAGE),if=ide,index=1,media=cdrom
 
 GDB = i386-elf-gdb
 
-all : $(IMAGE) $(HDD)
+all : $(IMAGE)
 
 run : all
 	$(GDB)

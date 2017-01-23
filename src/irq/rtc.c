@@ -1,4 +1,5 @@
 #include "irq/rtc.h"
+#include "io/port.h"
 #include "irq/pic.h"
 #include "util/log.h"
 
@@ -25,6 +26,6 @@ void rtcPeriodicHandler() {
     klog("clock tick!!");
 
     outb(RTCCommand, RTCRegC);
-    intb(RTCData);
+    inb(RTCData);
     picEOI(RTCIRQ);
 }

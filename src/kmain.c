@@ -6,6 +6,8 @@
 #include "io/serial.h"
 #include "io/framebuffer.h"
 #include "irq/interrupt.h"
+#include "irq/pic.h"
+#include "irq/rtc.h"
 #include "util/string.h"
 #include "util/multiboot.h"
 #include "util/log.h"
@@ -21,6 +23,9 @@ int kmain(multiboot_info_t *mbi) {
     klogSetDevice(fb);
     klog("log start");
 
+    initPIC();
+    initRTC();
+
     initPCI();
     initATA();
 
@@ -32,6 +37,10 @@ int kmain(multiboot_info_t *mbi) {
     mbi = mbi;
 
     __asm__("int3\n");
+
+    for (;;) {
+        stihlt();
+    }
 
     return 0;
 }

@@ -66,7 +66,6 @@ static void ataDetectChannel(uint32_t *bar, uint32_t def1, uint32_t def2) {
     ata_channel_t *channel = kalloc(KmemATAChannel);
     channel -> base     = ataAddress(bar[0], def1);
     channel -> control  = ataAddress(bar[1], def2);
-    channel -> bmide    = 0;
     channel -> selected = 0;
 
     klog("detect ide master");

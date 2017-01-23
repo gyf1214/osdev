@@ -58,7 +58,7 @@
 #define ATAPollTry          10240
 
 typedef struct ata_channel {
-    uint16_t base, control, bmide;
+    uint16_t base, control;
     uint8_t selected;
 }ata_channel_t;
 

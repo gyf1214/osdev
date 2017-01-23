@@ -70,6 +70,7 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 ### Interrupt Requests ###
 
 - [x] Interrupt
+- [ ] PIC
 
 ## Author ##
 

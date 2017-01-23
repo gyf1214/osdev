@@ -26,4 +26,18 @@ lidt:
     ret
 .size lidt, . - lidt
 
+.global cli
+.type cli, @function
+cli:
+    cli
+    ret
+.size cli, . - cli
+
+.global sti
+.type sti, @function
+sti:
+    sti
+    ret
+.size sti, . - sti
+
 wrapInterrupt 03, intHandlerDebug

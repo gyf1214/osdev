@@ -45,6 +45,8 @@ IntExtern(03);
 void initInterrupt(void);
 void lidt(idtr_t *idtr);
 void intSetDesc(int index, uint32_t addr, uint16_t flag);
+void cli(void);
+void sti(void);
 
 void intHandlerDebug(void);
 

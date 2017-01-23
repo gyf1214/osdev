@@ -71,6 +71,7 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 
 - [x] Interrupt
 - [ ] PIC
+- [ ] Real Time Clock
 
 ## Author ##
 

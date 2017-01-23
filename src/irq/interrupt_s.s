@@ -40,4 +40,4 @@ sti:
     ret
 .size sti, . - sti
 
-wrapInterrupt 03, intHandlerDebug
+wrapInterrupt 03, intDebugHandler

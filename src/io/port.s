@@ -84,3 +84,11 @@ insl:
     rep insl
     ret
 .size insl, . - insl
+
+.global ioWait
+.type ioWait, @function
+ioWait:
+    xorl %eax, %eax
+    outb %al, $0x80
+    ret
+.size ioWait, . - ioWait

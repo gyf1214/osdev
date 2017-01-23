@@ -16,7 +16,7 @@
 #define PICICW1Init     0x10
 
 #define PIC1Offset      0x20
-#define PIC2Offset      0x80
+#define PIC2Offset      0x40
 
 #define PIC2IRQ         2
 

@@ -27,8 +27,6 @@ void intSetDesc(int index, uint32_t addr, uint16_t flag) {
     idt[index] = desc;
 }
 
-void intHandlerDebug(int_frame_t stack) {
-    stack = stack;
-
+void intHandlerDebug() {
     klog("int 0x03 triggered!");
 }

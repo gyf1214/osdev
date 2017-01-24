@@ -2,6 +2,7 @@
 #define __ATA
 
 #include "util/type.h"
+#include "irq/interrupt.h"
 
 #define ATAPrimaryBase      0x1f0
 #define ATAPrimaryControl   0x3f4
@@ -29,6 +30,12 @@
 #define ATACmdIdent         0xec
 #define ATACmdIdentPacket   0xa1
 #define ATACmdRead          0x20
+#define ATACmdPacket        0xa0
+
+#define ATAPICmdRead        0xa8
+
+#define ATAPISectorSize     2048
+#define ATAPIPacketLength   12
 
 #define ATADriveMaster      0xa0
 #define ATADriveSlave       0xb0
@@ -57,9 +64,12 @@
 #define ATAIdentLength      256
 #define ATAPollTry          10240
 
+#define ATAPrimaryIRQ       14
+#define ATASecondaryIRQ     15
+
 typedef struct ata_channel {
     uint16_t base, control;
-    uint8_t selected;
+    uint8_t selected, irq;
 }ata_channel_t;
 
 typedef struct ata_device {
@@ -69,13 +79,17 @@ typedef struct ata_device {
     uint32_t capabilities, commandSets;
     uint64_t size;
     char model[ATAModelLength + 1];
-    struct ata_device *next;
+    uint8_t irq;
 }ata_device_t;
 
-extern ata_device_t *ataList;
+extern ata_device_t *ataDevices[ATADeviceLength];
 
 void initATA(void);
 int ataSelect(ata_channel_t *channel, uint8_t type);
 int ataPoll(ata_channel_t *channel, uint8_t mask);
+void ataWaitIRQ(ata_device_t *dev);
+int atapiRead(ata_device_t *dev, void *buf, uint32_t lba, uint8_t count);
+
+void ataIRQHandler(int_frame_t frame);
 
 #endif

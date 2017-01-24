@@ -12,6 +12,8 @@
 #include "util/multiboot.h"
 #include "util/log.h"
 
+static char buf[ATAPISectorSize];
+
 int kmain(multiboot_info_t *mbi) {
     initSegment();
     initInterrupt();
@@ -38,8 +40,15 @@ int kmain(multiboot_info_t *mbi) {
 
     __asm__("int3\n");
 
+    sti();
+
+    ata_device_t *cdrom = ataDevices[1];
+    if (atapiRead(cdrom, buf, 0, 1)) {
+        klog("read complete!");
+    }
+
     for (;;) {
-        stihlt();
+        hlt();
     }
 
     return 0;

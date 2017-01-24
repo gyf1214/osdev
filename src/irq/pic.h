@@ -35,5 +35,6 @@
 void initPIC(void);
 void picEOI(uint8_t irq);
 void picSetMask(uint8_t irq, int mask);
+int picIRQ(uint8_t intCode);
 
 #endif

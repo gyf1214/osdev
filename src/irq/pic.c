@@ -43,3 +43,13 @@ void picSetMask(uint8_t irq, int mask) {
     }
     outb(port, value);
 }
+
+int picIRQ(uint8_t intCode) {
+    if (intCode >= PIC1Offset && intCode < PIC1Offset + 8) {
+        return intCode - PIC1Offset;
+    }
+    if (intCode >= PIC2Offset && intCode < PIC2Offset + 8) {
+        return intCode - PIC2Offset + 8;
+    }
+    return -1;
+}

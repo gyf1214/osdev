@@ -52,38 +52,43 @@ inl:
     ret
 .size inl, . - inl;
 
-.global insb
-.type insb, @function
-insb:
-    movw 4(%esp), %dx
-    movl 8(%esp), %edi
-    movl 12(%esp), %ecx
+.macro ins s
+.global ins\s
+.type ins\s, @function
+ins\s:
+    pushl %edi
+    movw 8(%esp), %dx
+    movl 12(%esp), %edi
+    movl 16(%esp), %ecx
     cld
-    rep insb
+    rep ins\s
+    popl %edi
     ret
-.size insb, . - insb
+.size ins\s, . - ins\s
+.endm
 
-.global insw
-.type insw, @function
-insw:
-    movw 4(%esp), %dx
-    movl 8(%esp), %edi
-    movl 12(%esp), %ecx
+.macro outs s
+.global outs\s
+.type outs\s, @function
+outs\s:
+    pushl %esi
+    movw 8(%esp), %dx
+    movl 12(%esp), %esi
+    movl 16(%esp), %ecx
     cld
-    rep insw
+    rep outs\s
+    popl %esi
     ret
-.size insw, . - insw
+.size outs\s, . - outs\s
+.endm
 
-.global insl
-.type insl, @function
-insl:
-    movw 4(%esp), %dx
-    movl 8(%esp), %edi
-    movl 12(%esp), %ecx
-    cld
-    rep insl
-    ret
-.size insl, . - insl
+ins b
+ins w
+ins l
+
+outs b
+outs w
+outs l
 
 .global ioWait
 .type ioWait, @function

@@ -64,14 +64,16 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Generic Device Manager
 - [x] Framebuffer
 - [x] Generic PCI
-- [ ] ATA/ATAPI Disk
+- [x] ATA/ATAPI Disk Detect
+- [x] ATAPI Disk Read
 - [ ] Filesystem ISO9660
+- [ ] ATA Disk Read/Write
 
 ### Interrupt Requests ###
 
 - [x] Interrupt
-- [ ] PIC
-- [ ] Real Time Clock
+- [x] PIC
+- [x] Real Time Clock
 
 ## Author ##
 

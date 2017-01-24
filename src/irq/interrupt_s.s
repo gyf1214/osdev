@@ -40,6 +40,13 @@ sti:
     ret
 .size sti, . - sti
 
+.global hlt
+.type hlt, @function
+hlt:
+    hlt
+    ret
+.size hlt, . - hlt
+
 .global stihlt
 .type stihlt, @function
 stihlt:
@@ -50,3 +57,5 @@ stihlt:
 
 wrapInterrupt 03, intDebugHandler
 wrapInterrupt 40, rtcPeriodicHandler
+wrapInterrupt 46, ataIRQHandler
+wrapInterrupt 47, ataIRQHandler

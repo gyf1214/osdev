@@ -10,6 +10,8 @@ void initInterrupt() {
     memset(idt, 0, IntLength * sizeof(idt_t));
     IntSet(03, IntInteSys);
     IntSet(40, IntInteSys);
+    IntSet(46, IntInteSys);
+    IntSet(47, IntInteSys);
 
     idtr.limit = IntLength * sizeof(idt_t);
     idtr.address = (uint32_t) idt;

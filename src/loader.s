@@ -25,6 +25,13 @@ kPDT:
 
 _kPDT = kPDT - GlobalOffset
 
+.align 4
+.global kStack
+.type kStack, @object
+kStack:
+    .skip StackSize
+.size kStack, . - kStack
+
 .section .text
 .align 4
 

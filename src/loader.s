@@ -43,6 +43,7 @@ loader:
 
     movl $_kPDT, %ecx
     movl %ecx, %cr3
+    invlpg 0
 
     movl %cr4, %ecx
     orl $0x10, %ecx

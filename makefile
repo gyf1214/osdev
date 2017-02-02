@@ -4,7 +4,7 @@ AS = i386-elf-as
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
  		 -nostartfiles -nodefaultlibs -Wall -Wextra -Werror \
 		 -Isrc -g -Og
-ASFLAGS = -march=generic32
+ASFLAGS = -march=i486
 
 SRCPATH = src
 OBJPATH = obj
@@ -22,7 +22,8 @@ GRUBFILE = $(patsubst %, $(GRUBPATH)/%, $(GRUB))
 
 LIB = mm/segment io/port io/serial io/device util/string io/framebuffer \
 	  mm/kmem irq/interrupt util/log io/pci io/ata irq/pic irq/rtc
-OBJ = loader kmain mm/segment_s irq/interrupt_s $(LIB)
+OBJ = loader kmain mm/segment_s irq/interrupt_s mm/page_s \
+ 	  $(LIB)
 LIBFILE = $(patsubst %, $(OBJPATH)/%.o, $(LIB))
 LIBHEADER = $(patsubst %, $(SRCPATH)/%.h, $(LIB))
 OBJFILE = $(patsubst %, $(OBJPATH)/%.o, $(OBJ))

@@ -1,4 +1,5 @@
 #include "mm/kmem.h"
+#include "util/string.h"
 
 static kptr_t kbrk;
 static kmem_cache_t kCache[KmemCacheLength];
@@ -19,6 +20,10 @@ void kmemInitCache(int cache, size_t size, ctor_t ctor) {
     kCache[cache].head = NULL;
     kCache[cache].size = size;
     kCache[cache].ctor = ctor;
+}
+
+void kmemDefaultCtor(void *ptr, size_t size) {
+    memset(ptr, 0, size);
 }
 
 void *kalloc(int cache) {

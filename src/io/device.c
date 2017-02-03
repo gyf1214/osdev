@@ -3,18 +3,8 @@
 #include "io/serial.h"
 #include "io/framebuffer.h"
 
-static void deviceCtor(void *ptr, size_t size) {
-    Unused(size);
-
-    device_t *dev = (device_t *)ptr;
-    dev -> info = 0;
-    dev -> read = NULL;
-    dev -> write = NULL;
-    dev -> control = NULL;
-}
-
 void initDevice() {
-    kmemInitCache(KmemDevice, sizeof(device_t), deviceCtor);
+    kmemInitCache(KmemDevice, sizeof(device_t), kmemDefaultCtor);
 }
 
 void deviceWrite(device_t *dev, const char *data, size_t n) {

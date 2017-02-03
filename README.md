@@ -47,7 +47,6 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Bare Bones
 - [x] Higher Address Kernel
 - [x] Switch to `qemu` & `gdb`
-- [x] `multiboot` Info
 - [x] Upgrade to GRUB 2
 - [ ] ELF Loader
 
@@ -66,7 +65,6 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Generic PCI
 - [x] ATA/ATAPI Disk Detect
 - [x] ATAPI Disk Read
-- [ ] Filesystem ISO9660
 - [ ] ATA Disk Read/Write
 
 ### Interrupt Requests ###
@@ -74,6 +72,19 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 - [x] Interrupt
 - [x] PIC
 - [x] Real Time Clock
+
+### Filesystem ###
+
+- [ ] Virtual Filesystem Framework
+- [ ] RootFS
+- [ ] DevFS
+- [ ] ISO-9660
+
+### Misc ###
+
+- [x] `multiboot` Info
+- [x] Generic Double-linked List
+- [ ] Basic String Operations & Format
 
 ## Author ##
 

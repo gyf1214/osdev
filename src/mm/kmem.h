@@ -12,9 +12,10 @@
 #define KmemPCI         1
 #define KmemATAChannel  2
 #define KmemATADevice   3
-#define KmemFS          4
-#define KmemVnode       5
-#define KmemDentry      6
+#define KmemVnode       4
+#define KmemDentry      5
+#define KmemSuperBlock  6
+#define KmemFS          7
 
 typedef char *kptr_t;
 typedef void (*ctor_t)(void *, size_t);

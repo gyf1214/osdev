@@ -14,4 +14,10 @@ typedef uint32_t            size_t;
 #define NULL                ((void *)0)
 #define Unused(x)           (void)x
 
+#define MemberOffset(type, member)          ((size_t)&((type *)0) -> member)
+#define MemberContainer(ptr, type, member)  ({\
+    const typeof(((type *)0) -> member) *__ptr = (ptr);\
+    (type *)((char *)__ptr - MemberOffset(type, member));\
+})
+
 #endif

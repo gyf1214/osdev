@@ -4,7 +4,7 @@
 #include "io/framebuffer.h"
 
 static void deviceCtor(void *ptr, size_t size) {
-    size = size;
+    Unused(size);
 
     device_t *dev = (device_t *)ptr;
     dev -> info = 0;

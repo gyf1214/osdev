@@ -6,7 +6,8 @@ vnode_t *initRootfs() {
     fs_t *rootfs = fsAlloc(RootfsName);
     rootfs -> readSuperblock = ramfsReadSuperblock;
     rootfs -> releaseNode = ramfsReleaseNode;
+    rootfs -> readNode = ramfsReadNode;
     fsRegister(rootfs);
 
-    return fsMount(rootfs, NULL);
+    return fsLoad(rootfs, NULL);
 }

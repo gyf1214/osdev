@@ -16,7 +16,6 @@
 
 static char buf[ATAPISectorSize];
 static device_t *fb;
-static vnode_t *root;
 
 static void beforeLog() {
     initSegment();
@@ -56,7 +55,7 @@ int kmain(multiboot_info_t *mbi) {
 
     beforeLog();
     initLog();
-    root = initFS();
+    initFS();
     afterFS();
 
     sti();

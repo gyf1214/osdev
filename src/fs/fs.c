@@ -3,11 +3,12 @@
 #include "fs/dentry.h"
 #include "fs/superblock.h"
 #include "fs/rootfs/rootfs.h"
+#include "fs/devfs/devfs.h"
 #include "mm/kmem.h"
 #include "util/string.h"
 
 static fs_t *fsList = NULL;
-static vnode_t *fsRootNode;
+vnode_t *fsRoot = NULL;
 
 void fsRegister(fs_t *fs) {
     fs -> next = fsList;
@@ -30,18 +31,24 @@ fs_t *fsFind(const char *name) {
     return NULL;
 }
 
-vnode_t *fsMount(fs_t *fs, vnode_t *device) {
+vnode_t *fsLoad(fs_t *fs, vnode_t *device) {
     superblock_t *sb = superblockAlloc(fs, device);
     if (!fs -> readSuperblock(sb, device)) {
         kfree(KmemSuperBlock, sb);
         return NULL;
     } else {
-        return sb -> root;
+        return sb -> mount = sb -> root;
     }
 }
 
-vnode_t *fsRoot() {
-    return fsRootNode;
+vnode_t *fsMountAt(fs_t *fs, vnode_t *device, vnode_t *parent, const char *name) {
+    if (!vnodeOpen(parent)) return NULL;
+    vnode_t *root = fsLoad(fs, device);
+    if (!root) return NULL;
+    root -> sb -> mount = parent;
+    dentry_t *rootEntry = dentryAlloc(root, name);
+    vnodeAppendDentry(parent, rootEntry);
+    return root;
 }
 
 void initFS() {
@@ -50,5 +57,6 @@ void initFS() {
     kmemInitCache(KmemSuperBlock, sizeof(superblock_t), superblockCtor);
     kmemInitCache(KmemFS, sizeof(fs_t), kmemDefaultCtor);
 
-    fsRootNode = initRootfs();
+    fsRoot = initRootfs();
+    initDevfs();
 }

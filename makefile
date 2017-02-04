@@ -24,7 +24,7 @@ LIB = io/port io/serial io/device io/framebuffer io/pci io/ata \
 	  mm/segment mm/kmem \
 	  irq/interrupt irq/pic irq/rtc \
 	  fs/vnode fs/dentry fs/superblock fs/fs \
-	  fs/rootfs/rootfs fs/ramfs/ramfs \
+	  fs/rootfs/rootfs fs/ramfs/ramfs fs/devfs/devfs \
 	  util/string util/log util/list
 OBJ = loader kmain mm/segment_s irq/interrupt_s mm/page_s \
  	  $(LIB)

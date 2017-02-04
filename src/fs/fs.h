@@ -20,11 +20,14 @@ typedef struct fs {
     int (*compareName)(const char *s1, const char *s2);
 }fs_t;
 
+extern struct vnode *fsRoot;
+
 void fsRegister(fs_t *fs);
 fs_t *fsAlloc(const char *name);
 fs_t *fsFind(const char *name);
-struct vnode *fsMount(fs_t *fs, struct vnode *);
-struct vnode *fsRoot(void);
+struct vnode *fsLoad(fs_t *fs, struct vnode *device);
+struct vnode *fsMountAt(fs_t *fs, struct vnode *device,
+                        struct vnode *parent, const char *name);
 void initFS(void);
 
 #endif

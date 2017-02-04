@@ -6,6 +6,7 @@
 
 #define VnodePresent    0x01
 #define VnodeDirty      0x02
+#define VnodeDirectory  0x80
 
 struct dentry;
 struct superblock;
@@ -29,6 +30,7 @@ vnode_t *vnodeWrite(vnode_t *vnode);
 struct dentry *vnodeFindDentry(vnode_t *vnode, const char *name);
 void vnodeAppendDentry(vnode_t *vnode, struct dentry *dentry);
 void vnodeClearDentry(vnode_t *vnode);
+void vnodeInitDir(vnode_t *vnode, vnode_t *parent);
 void vnodeCtor(void *ptr, size_t size);
 vnode_t *vnodeAlloc(struct superblock *sb);
 void vnodeDelete(vnode_t *vnode);

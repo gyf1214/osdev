@@ -96,6 +96,12 @@ void vnodeClearDentry(vnode_t *vnode) {
     }
 }
 
+void vnodeInitDir(vnode_t *vnode, vnode_t *parent) {
+    vnode -> flags |= VnodeDirectory;
+    vnodeAppendDentry(vnode, dentryAlloc(vnode, DentryNameThis));
+    vnodeAppendDentry(vnode, dentryAlloc(parent, DentryNameParent));
+}
+
 void vnodeCtor(void *ptr, size_t size) {
     memset(ptr, 0, size);
     vnode_t *vnode = ptr;

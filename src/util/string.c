@@ -15,6 +15,11 @@ char *strncpy(char *dst, const char *src, size_t n) {
     return ret;
 }
 
+int strcmp(const char *s1, const char *s2) {
+    for (; *s1 && *s2 && *s1 == *s2; ++s1, ++s2);
+    return *(unsigned char *)s1 - *(unsigned char *)s2;
+}
+
 void *memset(void *ptr, int ch, size_t size) {
     uint8_t *a = ptr;
     uint8_t x = (uint8_t)ch;

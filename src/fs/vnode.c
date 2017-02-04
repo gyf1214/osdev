@@ -71,6 +71,17 @@ vnode_t *vnodeWrite(vnode_t *vnode) {
     return ret;
 }
 
+dentry_t *vnodeFindDentry(vnode_t *vnode, const char *name) {
+    list_t *now = vnode -> dentryList.next;
+    while (now != &vnode -> dentryList) {
+        dentry_t *dentry = listEntry(now, dentry_t, dentryList);
+        if (dentryCompareName(dentry, name)) {
+            return dentry;
+        }
+    }
+    return NULL;
+}
+
 void vnodeAppendDentry(vnode_t *vnode, dentry_t *dentry) {
     listAppend(&vnode -> dentryList, &dentry -> dentryList);
 }

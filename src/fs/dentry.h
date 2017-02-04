@@ -19,8 +19,9 @@ typedef struct dentry {
     list_t dentryList;
 }dentry_t;
 
+int dentryCompareName(dentry_t *dentry, const char *name);
 void dentryCtor(void *ptr, size_t size);
-dentry_t *dentryAlloc(vnode_t *vnode, const char *name);
+dentry_t *dentryAlloc(struct vnode *vnode, const char *name);
 void dentryDelete(dentry_t *dentry);
 
 #endif

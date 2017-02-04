@@ -17,12 +17,13 @@ typedef struct fs {
     struct vnode *(*releaseNode)(struct vnode *);
     struct vnode *(*readNode)(struct vnode *);
     struct vnode *(*writeNode)(struct vnode *);
+    int (*compareName)(const char *s1, const char *s2);
 }fs_t;
 
 void fsRegister(fs_t *fs);
 fs_t *fsAlloc(const char *name);
 fs_t *fsFind(const char *name);
 struct vnode *fsMount(fs_t *fs, struct vnode *);
-void initFS(void);
+struct vnode *initFS(void);
 
 #endif

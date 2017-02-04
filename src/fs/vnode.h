@@ -26,6 +26,7 @@ void vnodeUnlink(vnode_t *vnode);
 vnode_t *vnodeInit(vnode_t *vnode);
 vnode_t *vnodeRelease(vnode_t *vnode);
 vnode_t *vnodeWrite(vnode_t *vnode);
+struct dentry *vnodeFindDentry(vnode_t *vnode, const char *name);
 void vnodeAppendDentry(vnode_t *vnode, struct dentry *dentry);
 void vnodeClearDentry(vnode_t *vnode);
 void vnodeCtor(void *ptr, size_t size);

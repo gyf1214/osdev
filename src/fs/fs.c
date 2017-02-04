@@ -2,6 +2,7 @@
 #include "fs/vnode.h"
 #include "fs/dentry.h"
 #include "fs/superblock.h"
+#include "fs/rootfs/rootfs.h"
 #include "mm/kmem.h"
 #include "util/string.h"
 
@@ -37,9 +38,11 @@ vnode_t *fsMount(fs_t *fs, vnode_t *vnode) {
     }
 }
 
-void initFS() {
+vnode_t *initFS() {
     kmemInitCache(KmemVnode, sizeof(vnode_t), vnodeCtor);
     kmemInitCache(KmemDentry, sizeof(dentry_t), dentryCtor);
     kmemInitCache(KmemSuperBlock, sizeof(superblock_t), superblockCtor);
     kmemInitCache(KmemFS, sizeof(fs_t), kmemDefaultCtor);
+
+    return initRootfs();
 }

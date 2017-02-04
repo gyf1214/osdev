@@ -15,6 +15,7 @@ typedef struct superblock {
 }superblock_t;
 
 void superblockCtor(void *ptr, size_t size);
+superblock_t *superblockAlloc(struct fs *);
 void superblockAppendVnode(superblock_t *sb, struct vnode *vnode);
 
 #endif

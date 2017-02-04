@@ -20,7 +20,7 @@ typedef struct dentry {
 }dentry_t;
 
 void dentryCtor(void *ptr, size_t size);
-dentry_t *dentryAlloc(vnode_t *vnode);
+dentry_t *dentryAlloc(vnode_t *vnode, const char *name);
 void dentryDelete(dentry_t *dentry);
 
 #endif

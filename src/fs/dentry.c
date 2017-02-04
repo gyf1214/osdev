@@ -9,9 +9,10 @@ void dentryCtor(void *ptr, size_t size) {
     listInit(&dentry -> dentryList);
 }
 
-dentry_t *dentryAlloc(vnode_t *vnode) {
+dentry_t *dentryAlloc(vnode_t *vnode, const char *name) {
     dentry_t *dentry = kalloc(KmemDentry);
     dentry -> vnode = vnodeLink(vnode);
+    strncpy(dentry -> name, name, DentryNameLength);
 }
 
 void dentryDelete(dentry_t *dentry) {

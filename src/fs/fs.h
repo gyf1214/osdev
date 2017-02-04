@@ -10,7 +10,6 @@ struct dentry;
 struct superblock;
 
 typedef struct fs {
-    uint32_t inodeCount;
     char name[FSNameLength];
     struct fs *next;
     struct superblock *(*readSuperblock)(struct superblock *, struct vnode *);

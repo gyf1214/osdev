@@ -4,7 +4,7 @@
 
 void superblockCtor(void *ptr, size_t size) {
     memset(ptr, 0, size);
-    superblock_t *sb = (superblock_t *)ptr;
+    superblock_t *sb = ptr;
     listInit(&sb -> vnodeList);
 }
 

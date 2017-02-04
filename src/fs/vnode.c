@@ -59,7 +59,7 @@ void vnodeClearDentry(vnode_t *vnode) {
 
 void vnodeCtor(void *ptr, size_t size) {
     memset(ptr, 0, size);
-    vnode_t *vnode = (vnode_t *)ptr;
+    vnode_t *vnode = ptr;
     listInit(&vnode -> vnodeList);
     listInit(&vnode -> dentryList);
 }

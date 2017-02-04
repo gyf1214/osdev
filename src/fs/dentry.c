@@ -5,8 +5,13 @@
 
 void dentryCtor(void *ptr, size_t size) {
     memset(ptr, 0, size);
-    dentry_t *dentry = (dentry_t *)ptr;
+    dentry_t *dentry = ptr;
     listInit(&dentry -> dentryList);
+}
+
+dentry_t *dentryAlloc(vnode_t *vnode) {
+    dentry_t *dentry = kalloc(KmemDentry);
+    dentry -> vnode = vnodeLink(vnode);
 }
 
 void dentryDelete(dentry_t *dentry) {

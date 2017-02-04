@@ -23,7 +23,7 @@ int strcmp(const char *s1, const char *s2) {
 void *memset(void *ptr, int ch, size_t size) {
     uint8_t *a = ptr;
     uint8_t x = (uint8_t)ch;
-    while (--size > 0) {
+    while (size-- > 0) {
         *a++ = x;
     }
     return ptr;

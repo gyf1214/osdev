@@ -6,8 +6,17 @@ int strlen(const char *str) {
     return n;
 }
 
+char *strncpy(char *dst, const char *src, size_t n) {
+    char *ret = dst;
+    while (*src && --n > 0) {
+        *dst++ = *src++;
+    }
+    *dst = 0;
+    return ret;
+}
+
 void *memset(void *ptr, int ch, size_t size) {
-    uint8_t *a = (uint8_t *)ptr;
+    uint8_t *a = ptr;
     uint8_t x = (uint8_t)ch;
     while (--size > 0) {
         *a++ = x;
@@ -16,8 +25,8 @@ void *memset(void *ptr, int ch, size_t size) {
 }
 
 void *memcpy(void *dst, const void *src, size_t size) {
-    char *d = (char *)dst;
-    const char *s = (const char *)src;
+    char *d = dst;
+    const char *s = src;
 
     while (size-- > 0) {
         *d++ = *s++;

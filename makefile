@@ -20,8 +20,12 @@ ISOFLAGS =
 GRUB = grub.cfg
 GRUBFILE = $(patsubst %, $(GRUBPATH)/%, $(GRUB))
 
-LIB = mm/segment io/port io/serial io/device util/string io/framebuffer \
-	  mm/kmem irq/interrupt util/log io/pci io/ata irq/pic irq/rtc
+LIB = io/port io/serial io/device io/framebuffer io/pci io/ata \
+	  mm/segment mm/kmem \
+	  irq/interrupt irq/pic irq/rtc \
+	  fs/vnode fs/dentry fs/superblock fs/fs \
+	  fs/rootfs/rootfs fs/ramfs/ramfs \
+	  util/string util/log util/list
 OBJ = loader kmain mm/segment_s irq/interrupt_s mm/page_s \
  	  $(LIB)
 LIBFILE = $(patsubst %, $(OBJPATH)/%.o, $(LIB))

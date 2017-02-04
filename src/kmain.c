@@ -8,44 +8,60 @@
 #include "irq/interrupt.h"
 #include "irq/pic.h"
 #include "irq/rtc.h"
+#include "fs/vnode.h"
+#include "fs/fs.h"
 #include "util/string.h"
 #include "util/multiboot.h"
 #include "util/log.h"
 
 static char buf[ATAPISectorSize];
+static device_t *fb;
+static vnode_t *root;
 
-int kmain(multiboot_info_t *mbi) {
+static void beforeLog() {
     initSegment();
     initInterrupt();
     initKmem();
     initDevice();
+}
 
-    device_t *com1 = initSerial(SerialCOM1);
-    device_t *fb = initFB();
+static void initLog() {
+    fb = initFB();
     klogSetDevice(fb);
     klog("log start");
+}
 
+static void afterFS() {
     initPIC();
     initRTC();
-
     initPCI();
     initATA();
+}
 
+static void tests() {
     char *str = "hello world!\n";
     int len = strlen(str);
     deviceWrite(fb, str, len);
-    deviceWrite(com1, str, len);
-
-    mbi = mbi;
 
     __asm__("int3\n");
-
-    sti();
 
     ata_device_t *cdrom = ataDevices[1];
     if (atapiRead(cdrom, buf, 0, 1)) {
         klog("read complete!");
     }
+}
+
+int kmain(multiboot_info_t *mbi) {
+    Unused(mbi);
+
+    beforeLog();
+    initLog();
+    root = initFS();
+    afterFS();
+
+    sti();
+
+    tests();
 
     for (;;) {
         hlt();

@@ -27,7 +27,7 @@ vnode_t *vnodeLink(vnode_t *vnode) {
 
 void vnodeUnlink(vnode_t *vnode) {
     if (--vnode -> dcount <= 0 && !(vnode -> flags & VnodePresent)) {
-
+        vnodeDelete(vnode);
     }
 }
 

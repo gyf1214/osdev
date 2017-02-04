@@ -20,7 +20,8 @@ fs_t *fsAlloc(const char *name) {
 }
 
 fs_t *fsFind(const char *name) {
-    for (fs_t *fs = fsList; fs; fs = fs -> next) {
+    fs_t *fs;
+    for (fs = fsList; fs; fs = fs -> next) {
         if (!strcmp(fs -> name, name)) {
             return fs;
         }

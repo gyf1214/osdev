@@ -7,6 +7,7 @@
 #include "util/string.h"
 
 static fs_t *fsList = NULL;
+static vnode_t *fsRootNode;
 
 void fsRegister(fs_t *fs) {
     fs -> next = fsList;
@@ -39,11 +40,15 @@ vnode_t *fsMount(fs_t *fs, vnode_t *device) {
     }
 }
 
-vnode_t *initFS() {
+vnode_t *fsRoot() {
+    return fsRootNode;
+}
+
+void initFS() {
     kmemInitCache(KmemVnode, sizeof(vnode_t), vnodeCtor);
     kmemInitCache(KmemDentry, sizeof(dentry_t), dentryCtor);
     kmemInitCache(KmemSuperBlock, sizeof(superblock_t), superblockCtor);
     kmemInitCache(KmemFS, sizeof(fs_t), kmemDefaultCtor);
 
-    return initRootfs();
+    fsRootNode = initRootfs();
 }

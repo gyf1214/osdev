@@ -10,9 +10,10 @@ void superblockCtor(void *ptr, size_t size) {
     listInit(&sb -> vnodeList);
 }
 
-superblock_t *superblockAlloc(fs_t *fs) {
+superblock_t *superblockAlloc(fs_t *fs, vnode_t *device) {
     superblock_t *sb = kalloc(KmemSuperBlock);
     sb -> fs = fs;
+    sb -> device = device;
     return sb;
 }
 

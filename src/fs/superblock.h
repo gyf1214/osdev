@@ -12,10 +12,11 @@ typedef struct superblock {
     struct fs *fs;
     list_t vnodeList;
     struct vnode *root;
+    struct vnode *device;
 }superblock_t;
 
 void superblockCtor(void *ptr, size_t size);
-superblock_t *superblockAlloc(struct fs *);
+superblock_t *superblockAlloc(struct fs *fs, struct vnode *device);
 void superblockAppendVnode(superblock_t *sb, struct vnode *vnode);
 
 #endif

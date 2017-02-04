@@ -27,7 +27,7 @@ fs_t *fsFind(const char *name) {
     return NULL;
 }
 
-dentry_t *fsMount(fs_t *fs, vnode_t *vnode) {
+vnode_t *fsMount(fs_t *fs, vnode_t *vnode) {
     superblock_t *sb = superblockAlloc(fs);
     if (!fs -> readSuperblock(sb, vnode)) {
         kfree(KmemSuperBlock, sb);

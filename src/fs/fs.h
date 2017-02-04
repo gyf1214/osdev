@@ -23,7 +23,7 @@ typedef struct fs {
 void fsRegister(fs_t *fs);
 fs_t *fsAlloc(const char *name);
 fs_t *fsFind(const char *name);
-struct dentry *fsMount(fs_t *fs, struct vnode *);
+struct vnode *fsMount(fs_t *fs, struct vnode *);
 void initFS(void);
 
 #endif

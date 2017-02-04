@@ -11,7 +11,7 @@ struct fs;
 typedef struct superblock {
     struct fs *fs;
     list_t vnodeList;
-    struct dentry *root;
+    struct vnode *root;
 }superblock_t;
 
 void superblockCtor(void *ptr, size_t size);

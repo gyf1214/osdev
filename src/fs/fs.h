@@ -16,6 +16,8 @@ typedef struct fs {
     struct superblock *(*readSuperblock)(struct superblock *, struct vnode *);
     struct vnode *(*initNode)(struct vnode *);
     struct vnode *(*releaseNode)(struct vnode *);
+    struct vnode *(*readNode)(struct vnode *);
+    struct vnode *(*writeNode)(struct vnode *);
 }fs_t;
 
 void fsRegister(fs_t *fs);

@@ -6,18 +6,22 @@
 #include "util/string.h"
 
 vnode_t *vnodeOpen(vnode_t *vnode) {
+    vnode_t *ret = vnode;
     if (!(vnode -> flags & VnodePresent)) {
-        vnodeInit(vnode);
+        ret = vnodeInit(vnode);
     }
-    ++vnode -> refcount;
-
-    return vnode;
+    if (ret) {
+        ++vnode -> refcount;
+    }
+    return ret;
 }
 
-void vnodeClose(vnode_t *vnode) {
+vnode_t *vnodeClose(vnode_t *vnode) {
+    vnode_t *ret = vnode;
     if (--vnode -> refcount <= 0) {
-        vnodeRelease(vnode);
+        ret = vnodeRelease(vnode);
     }
+    return ret;
 }
 
 vnode_t *vnodeLink(vnode_t *vnode) {
@@ -31,16 +35,40 @@ void vnodeUnlink(vnode_t *vnode) {
     }
 }
 
-void vnodeInit(vnode_t *vnode) {
+vnode_t *vnodeInit(vnode_t *vnode) {
     if (vnode -> sb -> fs -> initNode) {
-        vnode -> sb -> fs -> initNode(vnode);
+        return vnode -> sb -> fs -> initNode(vnode);
+    } else {
+        if (vnode -> sb -> fs -> readNode) {
+            if (!vnode -> sb -> fs -> readNode(vnode)) {
+                return NULL;
+            }
+        }
+        vnode -> flags |= VnodePresent;
+        return vnode;
     }
 }
 
-void vnodeRelease(vnode_t *vnode) {
+vnode_t *vnodeRelease(vnode_t *vnode) {
     if (vnode -> sb -> fs -> releaseNode) {
-        vnode -> sb -> fs -> releaseNode(vnode);
+        return vnode -> sb -> fs -> releaseNode(vnode);
+    } else {
+        vnode_t *ret = vnodeWrite(vnode);
+        vnode -> flags &= (~VnodePresent);
+        vnodeClearDentry(vnode);
+        return ret;
     }
+}
+
+vnode_t *vnodeWrite(vnode_t *vnode) {
+    vnode_t *ret = vnode;
+    if (vnode -> sb -> fs -> writeNode) {
+        ret = vnode -> sb -> fs -> writeNode(vnode);
+    }
+    if (ret) {
+        vnode -> flags &= (~VnodeDirty);
+    }
+    return ret;
 }
 
 void vnodeAppendDentry(vnode_t *vnode, dentry_t *dentry) {

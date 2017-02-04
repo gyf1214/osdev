@@ -20,11 +20,12 @@ typedef struct vnode {
 }vnode_t;
 
 vnode_t *vnodeOpen(vnode_t *vnode);
-void vnodeClose(vnode_t *vnode);
+vnode_t *vnodeClose(vnode_t *vnode);
 vnode_t *vnodeLink(vnode_t *vnode);
 void vnodeUnlink(vnode_t *vnode);
-void vnodeInit(vnode_t *vnode);
-void vnodeRelease(vnode_t *vnode);
+vnode_t *vnodeInit(vnode_t *vnode);
+vnode_t *vnodeRelease(vnode_t *vnode);
+vnode_t *vnodeWrite(vnode_t *vnode);
 void vnodeAppendDentry(vnode_t *vnode, struct dentry *dentry);
 void vnodeClearDentry(vnode_t *vnode);
 void vnodeCtor(void *ptr, size_t size);

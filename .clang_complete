@@ -1,3 +1,4 @@
+-m32
 -Isrc
 -Wall
 -Wextra

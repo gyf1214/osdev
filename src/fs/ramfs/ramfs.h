@@ -10,5 +10,6 @@
 superblock_t *ramfsReadSuperblock(superblock_t *sb, vnode_t *vnode);
 vnode_t *ramfsReleaseNode(vnode_t *vnode);
 vnode_t *ramfsReadNode(vnode_t *vnode);
+vnode_t *ramfsAllocNode(superblock_t *sb);
 
 #endif

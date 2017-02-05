@@ -13,10 +13,9 @@ vnode_t *ramfsReleaseNode(vnode_t *vnode) {
     return vnode;
 }
 
-vnode_t *ramfsAllocDir(superblock_t *sb, vnode_t *parent) {
+vnode_t *ramfsAllocNode(superblock_t *sb) {
     vnode_t *vnode = vnodeAlloc(sb);
-    vnode -> flags |= VnodeDirectory | VnodePresent;
-    vnodeInitDir(vnode, parent);
+    vnode -> flags |= VnodePresent;
 
     return vnode;
 }

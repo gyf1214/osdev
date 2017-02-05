@@ -21,8 +21,8 @@ size_t deviceRead(device_t *dev, char *buf, size_t n) {
     }
 }
 
-void deviceControl(device_t *dev, uint32_t sig) {
+void deviceControl(device_t *dev, uint32_t flag, uint32_t data) {
     if (dev -> control) {
-        dev -> control(dev -> info, sig);
+        dev -> control(dev -> info, flag, data);
     }
 }

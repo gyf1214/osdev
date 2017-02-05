@@ -100,10 +100,13 @@ void fbPutChar(char ch) {
     }
 }
 
-void fbWrite(uint32_t info, const char *data, size_t n) {
+ssize_t fbWrite(uint32_t info, const void *data, size_t n) {
     Unused(info);
 
+    ssize_t ret = n;
+    const char *buf = data;
     while (n-- > 0) {
-        fbPutChar(*data++);
+        fbPutChar(*buf++);
     }
+    return ret;
 }

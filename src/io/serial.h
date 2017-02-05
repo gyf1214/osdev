@@ -26,6 +26,6 @@ char serialGetChar(uint16_t port);
 int serialReady(uint16_t port);
 void serialPutChar(uint16_t port, char ch);
 
-void serialWrite(uint32_t port, const char *data, size_t n);
+ssize_t serialWrite(uint32_t port, const void *data, size_t n);
 
 #endif

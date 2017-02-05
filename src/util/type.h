@@ -10,6 +10,8 @@ typedef unsigned int        uint32_t;
 typedef long long           int64_t;
 typedef unsigned long long  uint64_t;
 typedef uint32_t            size_t;
+typedef int32_t             ssize_t;
+typedef uint64_t            offset_t;
 
 #define NULL                ((void *)0)
 #define Unused(x)           (void)x

@@ -11,8 +11,8 @@ typedef struct device {
 }device_t;
 
 void initDevice(void);
-void deviceWrite(device_t *dev, const char *data, size_t n);
-size_t deviceRead(device_t *dev, char *buf, size_t n);
+ssize_t deviceWrite(device_t *dev, const char *data, size_t n);
+ssize_t deviceRead(device_t *dev, char *buf, size_t n);
 void deviceControl(device_t *dev, uint32_t flag, uint32_t data);
 
 #endif

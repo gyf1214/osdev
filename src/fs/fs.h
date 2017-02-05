@@ -8,6 +8,7 @@
 struct vnode;
 struct dentry;
 struct superblock;
+struct file;
 
 typedef struct fs {
     char name[FSNameLength];
@@ -18,6 +19,8 @@ typedef struct fs {
     struct vnode *(*readNode)(struct vnode *);
     struct vnode *(*writeNode)(struct vnode *);
     int (*compareName)(const char *s1, const char *s2);
+    ssize_t (*readFile)(struct vnode *, void *buf, size_t size, offset_t *offset);
+    ssize_t (*writeFile)(struct vnode *, const void *buf, size_t size, offset_t *offset);
 }fs_t;
 
 extern struct vnode *fsRoot;

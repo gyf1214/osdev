@@ -2,6 +2,7 @@
 #include "fs/vnode.h"
 #include "fs/dentry.h"
 #include "fs/superblock.h"
+#include "fs/file.h"
 #include "fs/rootfs/rootfs.h"
 #include "fs/devfs/devfs.h"
 #include "mm/kmem.h"
@@ -56,6 +57,7 @@ void initFS() {
     kmemInitCache(KmemDentry, sizeof(dentry_t), dentryCtor);
     kmemInitCache(KmemSuperBlock, sizeof(superblock_t), superblockCtor);
     kmemInitCache(KmemFS, sizeof(fs_t), kmemDefaultCtor);
+    kmemInitCache(KmemFile, sizeof(file_t), kmemDefaultCtor);
 
     fsRoot = initRootfs();
     initDevfs();

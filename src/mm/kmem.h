@@ -16,6 +16,7 @@
 #define KmemDentry      5
 #define KmemSuperBlock  6
 #define KmemFS          7
+#define KmemFile        8
 
 typedef char *kptr_t;
 typedef void (*ctor_t)(void *, size_t);

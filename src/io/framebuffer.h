@@ -6,6 +6,8 @@
 
 typedef uint16_t    fb_t;
 
+#define FBMountPoint    "fb"
+
 #define FBBase          ((fb_t *)0xc00b8000)
 #define FBCol           80
 #define FBRow           25
@@ -26,7 +28,7 @@ typedef uint16_t    fb_t;
 void fbSetCell(int x, int y, char c, uint8_t fg, uint8_t bg);
 void fbSetCursor(int x, int y);
 
-device_t *initFB(void);
+void initFB(void);
 void fbClear(void);
 void fbScroll(void);
 void fbNewLine(void);

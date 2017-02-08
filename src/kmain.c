@@ -9,28 +9,29 @@
 #include "irq/pic.h"
 #include "irq/rtc.h"
 #include "fs/vnode.h"
+#include "fs/file.h"
 #include "fs/fs.h"
 #include "util/string.h"
 #include "util/multiboot.h"
 #include "util/log.h"
 
 static char buf[ATAPISectorSize];
-static device_t *fb;
 
-static void beforeLog() {
+static void beforeFS() {
     initSegment();
     initInterrupt();
     initKmem();
-    initDevice();
 }
 
 static void initLog() {
-    fb = initFB();
-    klogSetDevice(fb);
+    file_t *logger = fileOpen(fsGetFile(fsRoot, "dev/com1"));
+    klogSetFile(logger);
     klog("log start");
 }
 
 static void afterFS() {
+    initDevice();
+    initLog();
     initPIC();
     initRTC();
     initPCI();
@@ -38,9 +39,10 @@ static void afterFS() {
 }
 
 static void tests() {
+    file_t *fb = fileOpen(fsGetFile(fsRoot, "dev/fb"));
     char *str = "hello world!\n";
     int len = strlen(str);
-    deviceWrite(fb, str, len);
+    fileWrite(fb, str, len);
 
     __asm__("int3\n");
 
@@ -53,8 +55,7 @@ static void tests() {
 int kmain(multiboot_info_t *mbi) {
     Unused(mbi);
 
-    beforeLog();
-    initLog();
+    beforeFS();
     initFS();
     afterFS();
 

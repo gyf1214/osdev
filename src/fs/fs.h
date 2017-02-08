@@ -4,6 +4,7 @@
 #include "util/type.h"
 
 #define FSNameLength    16
+#define FSPathDelim     '/'
 
 struct vnode;
 struct dentry;
@@ -31,6 +32,7 @@ fs_t *fsFind(const char *name);
 struct vnode *fsLoad(fs_t *fs, struct vnode *device);
 struct vnode *fsMountAt(fs_t *fs, struct vnode *device,
                         struct vnode *parent, const char *name);
+struct vnode *fsGetFile(struct vnode *root, const char *path);
 void initFS(void);
 
 #endif

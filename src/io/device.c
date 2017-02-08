@@ -5,6 +5,9 @@
 
 void initDevice() {
     kmemInitCache(KmemDevice, sizeof(device_t), kmemDefaultCtor);
+
+    initSerial();
+    initFB();
 }
 
 ssize_t deviceWrite(device_t *dev, const char *data, size_t n) {

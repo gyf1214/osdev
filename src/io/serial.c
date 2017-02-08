@@ -1,8 +1,13 @@
 #include "io/serial.h"
 #include "io/port.h"
 #include "mm/kmem.h"
+#include "fs/devfs/devfs.h"
 
-device_t *initSerial(uint16_t port) {
+void initSerial() {
+    devfsMountDevice(devRoot, SerialCOM1Mount, serialCreate(SerialCOM1));
+}
+
+device_t *serialCreate(uint16_t port) {
     outb(SerialIntr(port), SerialIntrSet);
     outb(SerialLine(port), SerialDLAB);
     outb(SerialData(port), SerialBaud & 0xff);

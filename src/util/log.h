@@ -1,9 +1,9 @@
 #ifndef __LOG
 #define __LOG
 
-#include "io/device.h"
+#include "fs/file.h"
 
-void klogSetDevice(device_t *dev);
+void klogSetFile(file_t *file);
 void klog(const char *line);
 
 #endif

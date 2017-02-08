@@ -52,6 +52,27 @@ vnode_t *fsMountAt(fs_t *fs, vnode_t *device, vnode_t *parent, const char *name)
     return root;
 }
 
+vnode_t *fsGetFile(vnode_t *root, const char *name) {
+    dentry_t *temp = kalloc(KmemDentry);
+    while (root && *name) {
+        int n = 0;
+        for (; *name && *name != FSPathDelim; ++name) {
+            temp -> name[n++] = *name;
+        }
+        if (*name) ++name;
+        if (!n) continue;
+        temp -> name[n] = 0;
+        root = vnodeOpen(root);
+        if (root) {
+            dentry_t *res = vnodeFindDentry(root, temp -> name);
+            vnodeClose(root);
+            root = res ? res -> vnode : NULL;
+        }
+    }
+    kfree(KmemDentry, temp);
+    return root;
+}
+
 void initFS() {
     kmemInitCache(KmemVnode, sizeof(vnode_t), vnodeCtor);
     kmemInitCache(KmemDentry, sizeof(dentry_t), dentryCtor);

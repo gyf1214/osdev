@@ -1,6 +1,7 @@
 #include "io/framebuffer.h"
 #include "io/port.h"
 #include "mm/kmem.h"
+#include "fs/devfs/devfs.h"
 
 static int cursorX, cursorY;
 static uint8_t fbFG = FBWhite;
@@ -25,12 +26,13 @@ void fbSetCursor(int x, int y) {
     fbUpdateCursor();
 }
 
-device_t *initFB() {
+void initFB() {
     fbClear();
 
-    device_t *ret = (device_t *)kalloc(KmemDevice);
-    ret -> write = fbWrite;
-    return ret;
+    device_t *device = (device_t *)kalloc(KmemDevice);
+    device -> write = fbWrite;
+
+    devfsMountDevice(devRoot, FBMountPoint, device);
 }
 
 void fbClear() {

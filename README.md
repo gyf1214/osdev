@@ -75,9 +75,10 @@ Annoyingly, `Ctrl-C` (Signal 2) will kill the background simulator in `gdb` and 
 
 ### Filesystem ###
 
-- [ ] Virtual Filesystem Framework
-- [ ] RootFS
-- [ ] DevFS
+- [x] Virtual Filesystem Framework
+- [x] RootFS
+- [x] DevFS
+- [ ] Block Device & Buffer Cache
 - [ ] ISO-9660
 
 ### Misc ###
